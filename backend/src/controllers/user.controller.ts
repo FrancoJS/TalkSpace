@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { getUserByEmail, User } from '../models/user.model';
-import { ILoginRequest, IRegisterRequest, IUser } from '../models/interfaces/user.interface';
+import { UserService } from '../services/user.service';
+import { ILoginRequest, IRegisterRequest } from '../models/interfaces/user.interface';
 import { loginValidator, registerValidator } from '../validators/user.validator';
 import { comparePassword, hashPassword } from '../services/password.service';
 import { generateToken } from '../services/jwt.service';
@@ -16,7 +16,7 @@ const register = async (req: Request, res: Response): Promise<Response> => {
 
 		const { username, email, password }: IRegisterRequest = req.body;
 
-		const userExists = await getUserByEmail(email);
+		const userExists = await UserService.getUserByEmail(email);
 		if (userExists)
 			return res.status(409).json({
 				ok: false,
@@ -24,8 +24,7 @@ const register = async (req: Request, res: Response): Promise<Response> => {
 			});
 
 		const hashedPassword: string = await hashPassword(password);
-		const user = new User({ username, email, password: hashedPassword });
-		await user.save();
+		const user = await UserService.createUser({ username, email, password: hashedPassword });
 		const token: string = generateToken();
 
 		return res.status(201).json({
@@ -58,7 +57,7 @@ const login = async (req: Request, res: Response): Promise<Response> => {
 
 		const { email, password }: ILoginRequest = req.body;
 
-		const user = await getUserByEmail(email);
+		const user = await UserService.getUserByEmail(email);
 		if (!user)
 			return res.status(404).json({
 				ok: false,

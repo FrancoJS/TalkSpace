@@ -5,7 +5,6 @@ export interface IUser extends Document {
 	password: string;
 	createdAt: Date;
 }
-
 export interface IRegisterRequest {
 	username: string;
 	email: string;

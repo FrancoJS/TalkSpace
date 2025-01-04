@@ -10,10 +10,3 @@ const UserSchemma = new Schema<IUser>({
 });
 
 export const User = mongoose.model<IUser>('User', UserSchemma, 'users');
-
-// Crear funciones relacionadas con el modelo y exportarlas para poder ocuparlas
-const getUsers = () => User.find();
-const getUserByEmail = (email: string) => User.findOne({ email });
-const getUserById = (id: string) => User.findById(id);
-
-export { getUsers, getUserByEmail, getUserById };
