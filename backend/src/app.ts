@@ -14,6 +14,6 @@ app.use('/api/auth/users', userRouter);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, (): void => {
+app.listen(PORT, () => {
 	console.log('Server running on port 3000');
 });
