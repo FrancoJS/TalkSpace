@@ -1,5 +1,5 @@
-import { IRegisterRequest } from '../models/interfaces/user.interface';
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
+import { IRegisterRequest } from '../../models/interfaces/user.interface';
 
 const getUsers = () => User.find();
 

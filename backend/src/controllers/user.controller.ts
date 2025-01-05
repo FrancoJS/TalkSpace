@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { UserService } from '../services/user.service';
 import { ILoginRequest, IRegisterRequest } from '../models/interfaces/user.interface';
 import { loginValidator, registerValidator } from '../validators/user.validator';
-import { comparePassword, hashPassword } from '../services/password.service';
+import { comparePassword, hashPassword } from '../services/user.services/password.service';
 import { generateToken } from '../services/jwt.service';
+import { UserService } from '../services/user.services/user.service';
 
 const register = async (req: Request, res: Response): Promise<Response> => {
 	try {

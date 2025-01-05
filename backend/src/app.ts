@@ -28,6 +28,8 @@ app.use(morgan('dev'));
 
 app.use('/api/auth/users', userRouter);
 
+// socketHanlder
+
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
