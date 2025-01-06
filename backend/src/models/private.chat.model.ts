@@ -2,12 +2,12 @@ import mongoose, { Schema } from 'mongoose';
 import { IPrivateChat } from './interfaces/private.chat.interface';
 
 const PrivateChatSchema = new Schema<IPrivateChat>({
-	participant1: {
+	participant1Id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users',
 		required: true,
 	},
-	participant2: {
+	participant2Id: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users',
 		required: true,

@@ -17,7 +17,7 @@ const PrivateMessageSchema = new Schema<IPrivateMessage>({
 		required: true,
 		trim: true,
 	},
-	chatId: {
+	privateChatId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'privatechats',
 		required: true,
@@ -29,4 +29,8 @@ const PrivateMessageSchema = new Schema<IPrivateMessage>({
 	},
 });
 
-export const PrivateMessage = mongoose.model<IPrivateMessage>('PrivateMessage', PrivateMessageSchema, 'privatemessages');
+export const PrivateMessage = mongoose.model<IPrivateMessage>(
+	'PrivateMessage',
+	PrivateMessageSchema,
+	'privatemessages'
+);

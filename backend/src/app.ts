@@ -8,9 +8,9 @@ import connectDB from './database/database.connection';
 import userRouter from './routes/user.route';
 
 const app: Application = express();
-const server = http.createServer(app);
+export const server = http.createServer(app);
 
-const io = new Server(server, {
+export const io = new Server(server, {
 	cors: {
 		origin: '*',
 	},
