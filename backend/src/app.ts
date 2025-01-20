@@ -6,6 +6,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import connectDB from './database/database.connection';
 import userRouter from './routes/user.route';
+import { socketHandler } from './sockets/socket.handler';
 
 const app: Application = express();
 export const server = http.createServer(app);
@@ -28,7 +29,7 @@ app.use(morgan('dev'));
 
 app.use('/api/auth/users', userRouter);
 
-// socketHanlder
+socketHandler(io);
 
 const PORT = process.env.PORT || 3000;
 

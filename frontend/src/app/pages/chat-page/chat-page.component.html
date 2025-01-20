@@ -1,0 +1,16 @@
+<div class="container">
+  <mat-card class="card">
+    <mat-card-header class="card-header">
+      <mat-card-title>Chat</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">Aca van a ir los mensajes </mat-card-content>
+    <div class="chat-input">
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput placeholder="Escribe un mensaje.." [(ngModel)]="input" />
+      </mat-form-field>
+      <button mat-mini-fab aria-label="Example icon button with a menu icon" (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+</div>

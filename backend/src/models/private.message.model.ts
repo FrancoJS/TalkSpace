@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
-import { IPrivateMessage } from './interfaces/private.messages.interface';
+import { IPrivateMessageModel } from './interfaces/private.message.interface';
 
-const PrivateMessageSchema = new Schema<IPrivateMessage>({
+const PrivateMessageSchema = new Schema<IPrivateMessageModel>({
 	senderId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'users',
@@ -22,6 +22,10 @@ const PrivateMessageSchema = new Schema<IPrivateMessage>({
 		ref: 'privatechats',
 		required: true,
 	},
+	isDelivered: {
+		type: Boolean,
+		default: false,
+	},
 	createdAt: {
 		type: Date,
 		required: true,
@@ -29,7 +33,7 @@ const PrivateMessageSchema = new Schema<IPrivateMessage>({
 	},
 });
 
-export const PrivateMessage = mongoose.model<IPrivateMessage>(
+export const PrivateMessage = mongoose.model<IPrivateMessageModel>(
 	'PrivateMessage',
 	PrivateMessageSchema,
 	'privatemessages'
