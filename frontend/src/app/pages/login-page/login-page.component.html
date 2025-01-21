@@ -6,8 +6,8 @@
     <mat-card-content class="card-content">
       <form [formGroup]="form">
         <mat-form-field class="form-field" appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Ingrese su correo" formControlName="email" />
+          <mat-label class="form-label">Email</mat-label>
+          <input type="email" matInput placeholder="Ingrese su correo" formControlName="email" />
           <mat-icon matSuffix>mail</mat-icon>
           <mat-error *ngIf="emailField.hasError('email')">Ingrese un correo valido</mat-error>
           <mat-error *ngIf="emailField.hasError('required')">El correo es requerido</mat-error>

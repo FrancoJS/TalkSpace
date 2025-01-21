@@ -7,7 +7,7 @@ export interface IApiLoginResponse {
   ok: boolean;
   message: string;
   user: IUser;
-  token: string;
+  accessToken: string;
 }
 
 interface IUser {

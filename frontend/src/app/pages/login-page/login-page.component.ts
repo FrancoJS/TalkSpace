@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { AuthApiService } from '../../services/api/auth-api.service';
 import { IApiLoginRequest } from '../../services/api/models/user-interfaces';
+import { SocketService } from '../../services/socket/socket.service';
+import { Router } from '@angular/router';
 
 const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule];
 
@@ -21,20 +23,24 @@ const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatIconModule, MatI
 export class LoginPageComponent {
   private readonly __formBuilder = inject(FormBuilder);
   private readonly __authApiService = inject(AuthApiService);
+  private readonly __socketService = inject(SocketService);
+  private readonly __router = inject(Router);
 
   form = this.__formBuilder.group({
-    email: ['', [Validators.email, Validators.required, Validators.maxLength(100)]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    email: ['franco@gmail.com', [Validators.email, Validators.required, Validators.maxLength(100)]],
+    password: ['12345678', [Validators.required, Validators.minLength(8)]],
   });
 
   loginUser() {
     if (this.form.valid) {
       this.__authApiService.loginUser(this.form.value as IApiLoginRequest).subscribe({
         next: (response) => {
+          const { user, accessToken } = response;
+          const { _id } = user;
           console.log(response);
-          const { user } = response;
-          const { _id, username, email } = user;
-          localStorage.setItem('_id', _id);
+          this.__authApiService.setAccessToken(accessToken);
+          this.__socketService.connect(_id);
+          this.__router.navigate(['/chat']);
         },
         error: (err) => {
           console.log(err);

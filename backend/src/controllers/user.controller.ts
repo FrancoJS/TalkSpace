@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { ILoginRequest, IRegisterRequest } from '../models/interfaces/user.interface';
 import { loginValidator, registerValidator } from '../validators/user.validator';
 import { comparePassword, hashPassword } from '../services/user.services/password.service';
-import { generateToken } from '../services/jwt.service';
+
 import { UserService } from '../services/user.services/user.service';
+import { JwtService } from '../services/jwt.service';
 
 const register = async (req: Request, res: Response): Promise<Response> => {
 	try {
@@ -25,7 +26,8 @@ const register = async (req: Request, res: Response): Promise<Response> => {
 
 		const hashedPassword: string = await hashPassword(password);
 		const user = await UserService.createUser({ username, email, password: hashedPassword });
-		const token: string = generateToken();
+		const accessToken: string = JwtService.generateAccessToken();
+		const refreshToken: string = JwtService.generateRefreshToken();
 
 		return res.status(201).json({
 			ok: true,
@@ -35,7 +37,7 @@ const register = async (req: Request, res: Response): Promise<Response> => {
 				username: user.username,
 				email: user.email,
 			},
-			token,
+			accessToken,
 		});
 	} catch (error) {
 		return res.status(500).json({
@@ -71,7 +73,15 @@ const login = async (req: Request, res: Response): Promise<Response> => {
 				message: 'Correo o contraseña incorrectos',
 			});
 
-		const token: string = generateToken();
+		const accessToken: string = JwtService.generateAccessToken();
+		const refreshToken: string = JwtService.generateRefreshToken();
+
+		res.cookie('refreshToken', refreshToken, {
+			httpOnly: true,
+			maxAge: 7 * 24 * 60 * 60 * 1000,
+			secure: false,
+		});
+
 		return res.status(200).json({
 			ok: true,
 			message: 'Inicio de sesion exitoso',
@@ -80,7 +90,7 @@ const login = async (req: Request, res: Response): Promise<Response> => {
 				username: user.username,
 				email: user.email,
 			},
-			token,
+			accessToken,
 		});
 	} catch (error) {
 		return res.status(500).json({
