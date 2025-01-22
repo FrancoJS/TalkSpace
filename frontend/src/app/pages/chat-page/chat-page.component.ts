@@ -7,11 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { SocketService } from '../../services/socket/socket.service';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatButtonModule, MatIconModule, MatInputModule];
 @Component({
   selector: 'app-chat-page',
   standalone: true,
-  imports: [MATERIAL_MODULES, FormsModule, NgFor],
+  imports: [MATERIAL_MODULES, FormsModule, NgFor, SearchBarComponent],
   templateUrl: './chat-page.component.html',
   styleUrl: './chat-page.component.css',
 })

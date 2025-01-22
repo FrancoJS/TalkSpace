@@ -6,8 +6,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import connectDB from './database/database.connection';
+import authRouter from './routes/auth.route';
 import userRouter from './routes/user.route';
-import tokenRouter from './routes/token.route';
 import { socketHandler } from './sockets/socket.handler';
 
 const app: Application = express();
@@ -33,8 +33,8 @@ connectDB();
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/api/auth/users', userRouter);
-app.use('/api/auth/token', tokenRouter);
+app.use('/api/auth/', authRouter);
+app.use('/api/user/', userRouter);
 
 socketHandler(io);
 

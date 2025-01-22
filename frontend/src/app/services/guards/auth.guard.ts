@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthApiService } from '../api/auth-api.service';
 import { IRefreshTokenResponse } from '../api/models/token-interface';
+import { AuthApiService } from '../api/auth/auth-api.service';
 
 export const authGuard: CanActivateFn = () => {
   const jwtHelper = new JwtHelperService();

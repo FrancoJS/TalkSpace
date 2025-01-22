@@ -6,10 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
-import { AuthApiService } from '../../services/api/auth-api.service';
 import { IApiLoginRequest } from '../../services/api/models/user-interfaces';
 import { SocketService } from '../../services/socket/socket.service';
 import { Router } from '@angular/router';
+import { AuthApiService } from '../../services/api/auth/auth-api.service';
 
 const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule];
 
