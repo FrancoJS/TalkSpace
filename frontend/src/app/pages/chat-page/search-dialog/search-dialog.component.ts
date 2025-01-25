@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
+import { IUser } from '../../../services/api/models/user-interfaces';
 
 const MATERIAL_MODULES = [
   MatFormFieldModule,
@@ -27,10 +28,15 @@ const MATERIAL_MODULES = [
 export class SearchDialogComponent implements OnInit {
   private readonly _userApiService = inject(UserApiService);
   private readonly _formBuilder = inject(FormBuilder);
-  result!: string;
+  user: IUser = {
+    _id: '',
+    username: '',
+    email: '',
+  };
+  result: boolean = true;
 
   formGroup = this._formBuilder.group({
-    email: ['', [Validators.required, Validators.maxLength(100), Validators.email]],
+    email: ['franco@gmail.com', [Validators.required, Validators.maxLength(100), Validators.email]],
   });
 
   ngOnInit(): void {
@@ -44,8 +50,10 @@ export class SearchDialogComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((value) =>
           this._userApiService.getUserByEmail(value.email as string).pipe(
-            catchError((err) => {
-              console.log(err);
+            catchError(() => {
+              this.user.username = '';
+              this.user.email = '';
+              this.result = false;
               return of(null);
             }),
           ),
@@ -54,12 +62,17 @@ export class SearchDialogComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response) {
-            this.result = response.user.username;
+            this.user = response.user;
+            console.log(this.user);
           }
         },
         error: (err) => {
           console.log(err);
         },
       });
+  }
+
+  get emailField() {
+    return this.formGroup.controls.email;
   }
 }

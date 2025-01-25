@@ -1,18 +1,30 @@
 <mat-card class="dialog-card" appearance="raised">
-  <mat-card-header>
+  <!-- <mat-card-header>
     <mat-card-title><h2 mat-dialog-title>Buscar usuario</h2></mat-card-title>
-  </mat-card-header>
+  </mat-card-header> -->
   <mat-dialog-content class="dialog-content"
     ><ng-container [formGroup]="formGroup">
       <mat-form-field class="form-field" appearance="outline">
-        <input class="form-input" type="email" matInput placeholder="Correo electronico" formControlName="email" />
-        <mat-icon matSuffix>search</mat-icon>
+        <mat-icon matSuffix>mail</mat-icon>
+        <input class="form-input" type="email" matInput placeholder="Buscar usuario por correo" formControlName="email" />
+        @if(emailField.hasError('email')){
+        <mat-error>Ingrese un correo valido</mat-error>
+        } @if(emailField.hasError('maxlength')){
+        <mat-error>El correo debe tener 100 caracteres como maximo</mat-error>
+        }
       </mat-form-field>
     </ng-container>
+    <section class="user-info">
+      @if(user.username && user.email){
+      <div class="user-data">
+        Usuario: <span>{{ user.username }} ({{ user.email }})</span>
+      </div>
+      <mat-icon class="send-icon" matSuffix>send</mat-icon>
+      }@else if (!result) {
+      <p>
+        No se encontraron resultados <span> <mat-icon class="send-icon" matSuffix>sentiment_dissatisfied</mat-icon></span>
+      </p>
+      }
+    </section>
   </mat-dialog-content>
-
-  @if(result){
-  <p>{{ result }}</p>
-
-  }
 </mat-card>
