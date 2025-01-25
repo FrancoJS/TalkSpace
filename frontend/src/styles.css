@@ -8,3 +8,23 @@ body {
   background: rgb(3, 110, 101);
   background: linear-gradient(59deg, rgba(3, 110, 101, 1) 0%, rgba(1, 46, 42, 1) 100%);
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.my-panel {
+  border: 2px solid cyan;
+  border-radius: 10px;
+  background-color: #111;
+}
+
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0) !important;
+  transition: background-color 0.3s ease;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}

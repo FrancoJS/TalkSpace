@@ -1,29 +1,27 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IRefreshTokenResponse } from '../api/models/token-interface';
 import { AuthApiService } from '../api/auth/auth-api.service';
+import { catchError, map, Observable, of } from 'rxjs';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = (): Observable<boolean> => {
   const jwtHelper = new JwtHelperService();
   const router = inject(Router);
   const authApiService = inject(AuthApiService);
-  const accessToken = authApiService.getAccessToken();
+  let accessToken = authApiService.getAccessToken();
 
-  console.log(accessToken);
   if (!accessToken || jwtHelper.isTokenExpired(accessToken)) {
-    authApiService.refreshToken().subscribe({
-      next: (response) => {
+    return authApiService.refreshToken().pipe(
+      map((response) => {
         authApiService.setAccessToken(response.accessToken);
-        console.log(response);
         return true;
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         router.navigate(['/auth/login']);
-        console.log(err);
-        return false;
-      },
-    });
+        return of(false);
+      }),
+    );
   }
-  return true;
+
+  return of(true);
 };

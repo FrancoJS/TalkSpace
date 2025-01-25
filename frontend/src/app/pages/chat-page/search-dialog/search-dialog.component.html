@@ -1,0 +1,18 @@
+<mat-card class="dialog-card" appearance="raised">
+  <mat-card-header>
+    <mat-card-title><h2 mat-dialog-title>Buscar usuario</h2></mat-card-title>
+  </mat-card-header>
+  <mat-dialog-content class="dialog-content"
+    ><ng-container [formGroup]="formGroup">
+      <mat-form-field class="form-field" appearance="outline">
+        <input class="form-input" type="email" matInput placeholder="Correo electronico" formControlName="email" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </ng-container>
+  </mat-dialog-content>
+
+  @if(result){
+  <p>{{ result }}</p>
+
+  }
+</mat-card>

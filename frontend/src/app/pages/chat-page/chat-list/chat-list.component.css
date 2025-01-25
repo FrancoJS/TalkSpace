@@ -1,0 +1,31 @@
+.chat-list {
+  height: 100%;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+h2 {
+  font-size: 25px;
+}
+
+.add-icon {
+  cursor: pointer;
+  padding: 15px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+
+.add-icon:hover {
+  background-color: #ddd;
+  transition: all 0.1s ease-in-out;
+}
+
+

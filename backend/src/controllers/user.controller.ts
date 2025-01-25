@@ -4,7 +4,6 @@ import { UserService } from '../services/user.services/user.service';
 const getUserByEmail = async (req: Request, res: Response) => {
 	try {
 		const { email } = req.params;
-
 		const user = await UserService.getUserByEmail(email);
 
 		if (!user) {
@@ -14,12 +13,14 @@ const getUserByEmail = async (req: Request, res: Response) => {
 			});
 		}
 
-		// const { _id } = user;
-		console.log(user);
 		return res.status(200).json({
 			ok: true,
 			message: 'Usuario encontrado',
-			user,
+			user: {
+				_id: user._id,
+				username: user.username,
+				email: user.email,
+			},
 		});
 	} catch (error) {}
 };
