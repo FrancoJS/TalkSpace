@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { UserApiService } from '../../../services/api/user/user-api.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
@@ -28,6 +28,7 @@ const MATERIAL_MODULES = [
 export class SearchDialogComponent implements OnInit {
   private readonly _userApiService = inject(UserApiService);
   private readonly _formBuilder = inject(FormBuilder);
+  private readonly _dialogRef = inject(MatDialogRef<SearchDialogComponent>);
   user: IUser = {
     _id: '',
     username: '',
@@ -42,7 +43,7 @@ export class SearchDialogComponent implements OnInit {
   ngOnInit(): void {
     this.getUserByEmail();
   }
-  getUserByEmail() {
+  getUserByEmail(): void {
     this.formGroup.valueChanges
       .pipe(
         debounceTime(700),
@@ -59,17 +60,18 @@ export class SearchDialogComponent implements OnInit {
           ),
         ),
       )
-      .subscribe({
-        next: (response) => {
-          if (response) {
-            this.user = response.user;
-            console.log(this.user);
-          }
-        },
-        error: (err) => {
-          console.log(err);
-        },
+      .subscribe((response) => {
+        if (response) {
+          this.user = response.user;
+          console.log(this.user);
+        }
       });
+  }
+
+  sendMessage(): void {
+    if (this.result) {
+      this._dialogRef.close(this.user);
+    }
   }
 
   get emailField() {

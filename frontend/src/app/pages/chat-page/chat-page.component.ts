@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { SocketService } from '../../services/socket/socket.service';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { IUser } from '../../services/api/models/user-interfaces';
+import { UserSharingService } from '../../services/user-sharing.service';
 
 const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatButtonModule, MatIconModule, MatInputModule];
 @Component({
@@ -18,10 +20,13 @@ const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatButtonModule, Ma
 })
 export class ChatPageComponent implements OnInit {
   private readonly __socketService = inject(SocketService);
+  private readonly __userSharingService = inject(UserSharingService);
   input: string = '';
   messages: string[] = [];
+  user!: IUser;
 
   ngOnInit(): void {
+    this.__userSharingService.user$.subscribe((user) => (this.user = user));
     this.__socketService
       .listen<string>('joinPrivateChat')
       .subscribe((privateChatId) => this.__socketService.emit('joinPrivateChat', privateChatId));

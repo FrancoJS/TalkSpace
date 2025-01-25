@@ -14,17 +14,17 @@
         }
       </mat-form-field>
     </ng-container>
-    <section class="user-info">
-      @if(user.username && user.email){
+    @if(user.username && user.email){
+    <section (click)="sendMessage()" class="user-info">
       <div class="user-data">
         Usuario: <span>{{ user.username }} ({{ user.email }})</span>
       </div>
       <mat-icon class="send-icon" matSuffix>send</mat-icon>
-      }@else if (!result) {
-      <p>
-        No se encontraron resultados <span> <mat-icon class="send-icon" matSuffix>sentiment_dissatisfied</mat-icon></span>
-      </p>
-      }
     </section>
+    }@else if (!result) {
+    <p>
+      No se encontraron resultados <span> <mat-icon class="send-icon" matSuffix>sentiment_dissatisfied</mat-icon></span>
+    </p>
+    }
   </mat-dialog-content>
 </mat-card>
