@@ -1,9 +1,9 @@
 import { Server, Socket } from 'socket.io';
-import { PrivateChatService } from '../services/private.chat.services/private.chat.service';
-import { IPrivateMessage } from '../models/interfaces/private.message.interface';
+import { PrivateChatService } from '../services/private.chat.service/private.chat.service';
+import { IPrivateMessage } from '../interfaces/private.message.interface';
 import mongoose from 'mongoose';
 import { usersMap } from './socket.handler';
-import { PrivateMessageService } from '../services/private.chat.services/private.message.service';
+import { PrivateMessageService } from '../services/private.chat.service/private.message.service';
 
 export const privateChatHandler = (io: Server, socket: Socket) => {
 	socket.on('privateMessage', async (data: IPrivateMessage) => {

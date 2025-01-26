@@ -37,7 +37,7 @@ export class SearchDialogComponent implements OnInit {
   result: boolean = true;
 
   formGroup = this._formBuilder.group({
-    email: ['franco@gmail.com', [Validators.required, Validators.maxLength(100), Validators.email]],
+    email: ['franco2@gmail.com', [Validators.required, Validators.maxLength(100), Validators.email]],
   });
 
   ngOnInit(): void {

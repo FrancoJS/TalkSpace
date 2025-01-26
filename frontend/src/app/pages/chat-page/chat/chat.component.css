@@ -1,0 +1,40 @@
+.container-chat {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 80px 1fr 100px;
+}
+
+.chat-header {
+  padding: 0 30px;
+  color: #fff;
+  background-color: #111;
+  display: flex;
+  align-items: center;
+}
+
+.chat-header h2 {
+  font-size: 20px;
+}
+
+.chat-content {
+  padding: 30px;
+  overflow-y: scroll;
+}
+
+.chat-input {
+  padding: 0 30px;
+  color: #fff;
+  background-color: #111;
+  display: flex;
+  align-items: center;
+}
+
+.chat-input .form-field {
+  /* background-color: #fff; */
+  width: 100%;
+  padding-top: 15px;
+}
+
+.send-icon {
+  cursor: pointer;
+}

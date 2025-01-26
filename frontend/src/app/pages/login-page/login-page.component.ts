@@ -35,10 +35,9 @@ export class LoginPageComponent {
     if (this.form.valid) {
       this.__authApiService.loginUser(this.form.value as IApiLoginRequest).subscribe({
         next: (response) => {
-          const { user, accessToken } = response;
-          const { _id } = user;
+          const { accessToken } = response;
           this.__authApiService.setAccessToken(accessToken);
-          this.__socketService.connect(_id);
+          // this.__socketService.connect(_id);
           this.__router.navigate(['/chat']);
         },
         error: (err) => {

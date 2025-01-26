@@ -1,1 +1,24 @@
-<p>chat works!</p>
+<div class="container-chat">
+  <section class="chat-header">
+    @if (user.username && user.email) {
+    <h2>{{ user.username }} ( {{ user.email }} )</h2>
+    }
+  </section>
+  <section class="chat-content">
+    <p>Contenido</p>
+  </section>
+
+  <section class="chat-input">
+    @if (user.username) {
+    <mat-form-field class="form-field" appearance="outline">
+      <input
+        [(ngModel)]="chatInput"
+        (keydown.enter)="sendMessage()"
+        matInput
+        placeholder="Escribe un mensaje a {{ user.username }}"
+      />
+      <mat-icon (click)="sendMessage()" class="send-icon" matSuffix>send</mat-icon>
+    </mat-form-field>
+    }
+  </section>
+</div>

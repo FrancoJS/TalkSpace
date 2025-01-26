@@ -10,7 +10,7 @@
 }
 
 h2 {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .add-icon {
@@ -27,5 +27,3 @@ h2 {
   background-color: #ddd;
   transition: all 0.1s ease-in-out;
 }
-
-

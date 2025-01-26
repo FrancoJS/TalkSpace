@@ -9,12 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { IUser } from '../../services/api/models/user-interfaces';
 import { UserSharingService } from '../../services/user-sharing.service';
+import { ChatComponent } from './chat/chat.component';
 
 const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatButtonModule, MatIconModule, MatInputModule];
 @Component({
   selector: 'app-chat-page',
   standalone: true,
-  imports: [MATERIAL_MODULES, FormsModule, NgFor],
+  imports: [MATERIAL_MODULES, FormsModule, NgFor, ChatComponent],
   templateUrl: './chat-page.component.html',
   styleUrl: './chat-page.component.css',
 })

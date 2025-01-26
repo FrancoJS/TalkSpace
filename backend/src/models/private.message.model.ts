@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IPrivateMessageModel } from './interfaces/private.message.interface';
+import { IPrivateMessageModel } from '../interfaces/private.message.interface';
 
 const PrivateMessageSchema = new Schema<IPrivateMessageModel>({
 	senderId: {

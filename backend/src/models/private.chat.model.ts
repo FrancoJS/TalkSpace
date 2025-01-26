@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IPrivateChat } from './interfaces/private.chat.interface';
+import { IPrivateChat } from '../interfaces/private.chat.interface';
 
 const PrivateChatSchema = new Schema<IPrivateChat>({
 	participant1Id: {
