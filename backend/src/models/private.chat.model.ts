@@ -4,12 +4,12 @@ import { IPrivateChat } from '../interfaces/private.chat.interface';
 const PrivateChatSchema = new Schema<IPrivateChat>({
 	participant1Id: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'users',
+		ref: 'User',
 		required: true,
 	},
 	participant2Id: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'users',
+		ref: 'User',
 		required: true,
 	},
 	createdAt: {

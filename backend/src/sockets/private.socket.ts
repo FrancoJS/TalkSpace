@@ -27,7 +27,6 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 			}
 
 			const receiverSocketId = usersMap.get(receiverId);
-			console.log(receiverSocketId);
 
 			if (receiverSocketId) {
 				io.to(receiverSocketId).emit('joinPrivateChat', {

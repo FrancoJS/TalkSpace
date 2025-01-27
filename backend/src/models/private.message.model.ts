@@ -4,12 +4,12 @@ import { IPrivateMessageModel } from '../interfaces/private.message.interface';
 const PrivateMessageSchema = new Schema<IPrivateMessageModel>({
 	senderId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'users',
+		ref: 'User',
 		required: true,
 	},
 	receiverId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'users',
+		ref: 'User',
 		required: true,
 	},
 	message: {
@@ -19,7 +19,7 @@ const PrivateMessageSchema = new Schema<IPrivateMessageModel>({
 	},
 	privateChatId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'privatechats',
+		ref: 'PrivateChat',
 		required: true,
 	},
 	isDelivered: {

@@ -15,6 +15,7 @@ export const authGuard: CanActivateFn = (): Observable<boolean> => {
       map((response) => {
         console.log(response);
         authApiService.setAccessToken(response.accessToken);
+        authApiService.setUser(response.user);
         return true;
       }),
       catchError((err) => {

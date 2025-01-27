@@ -4,11 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
 import { UserSharingService } from '../../../services/user-sharing.service';
 import { IUser } from '../../../services/api/models/user-interfaces';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
+const MATERIAL_MODULES = [MatIconModule, MatDividerModule, MatListModule];
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MATERIAL_MODULES],
   templateUrl: './chat-list.component.html',
   styleUrl: './chat-list.component.css',
 })
