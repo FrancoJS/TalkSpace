@@ -1,5 +1,6 @@
 import { User } from '../../models/user.model';
 import { IRegisterRequest } from '../../interfaces/auth.interfaces';
+import { IUser } from '../../interfaces/user.interface';
 
 class UserService {
 	static async getUserByEmail(email: string) {

@@ -5,8 +5,8 @@ class JwtService {
 		return jwt.sign({}, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '2h' });
 	}
 
-	static generateRefreshToken(): string {
-		return jwt.sign({}, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
+	static generateRefreshToken(sessionId: string): string {
+		return jwt.sign({ sessionId }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
 	}
 }
 

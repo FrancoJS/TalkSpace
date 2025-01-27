@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
 export interface IPrivateMessageModel {
-	senderId: mongoose.Schema.Types.ObjectId;
-	receiverId: mongoose.Schema.Types.ObjectId;
+	senderId: Schema.Types.ObjectId;
+	receiverId: Schema.Types.ObjectId;
 	message: string;
-	privateChatId: mongoose.Schema.Types.ObjectId;
+	privateChatId: Schema.Types.ObjectId;
 	isDelivered: boolean;
 	createdAt: Date;
 }
