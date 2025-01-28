@@ -13,7 +13,6 @@ export const authGuard: CanActivateFn = (): Observable<boolean> => {
   if (!accessToken || jwtHelper.isTokenExpired(accessToken)) {
     return authApiService.refreshToken().pipe(
       map((response) => {
-        console.log(response);
         authApiService.setAccessToken(response.accessToken);
         authApiService.setUser(response.user);
         return true;

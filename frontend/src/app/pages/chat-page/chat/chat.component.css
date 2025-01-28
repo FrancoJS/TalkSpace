@@ -38,3 +38,7 @@
 .send-icon {
   cursor: pointer;
 }
+
+span {
+  font-size: 16px;
+}

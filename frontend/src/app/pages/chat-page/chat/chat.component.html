@@ -1,7 +1,9 @@
 <div class="container-chat">
   <section class="chat-header">
     @if (receiverUser.username && receiverUser.email) {
-    <h2>{{ receiverUser.username }} ( {{ receiverUser.email }} )</h2>
+    <h2>
+      {{ receiverUser.username }} <span>({{ receiverUser.email }})</span>
+    </h2>
     }
   </section>
   <section class="chat-content">

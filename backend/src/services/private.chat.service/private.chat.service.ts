@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import { IPopulatedPrivateChat } from '../../interfaces/private.chat.interface';
 import { PrivateChat } from '../../models/private.chat.model';
 
 class PrivateChatService {
@@ -16,16 +16,22 @@ class PrivateChatService {
 	}
 
 	static async getChatsByUserId(userId: string) {
-		return PrivateChat.find({
+		const chats = await PrivateChat.find({
 			$or: [{ participant1Id: userId }, { participant2Id: userId }],
-		})
-			.populate('participant1Id', 'username email')
-			.populate('participant2Id', 'username email');
+		}).populate<IPopulatedPrivateChat[]>('participant1Id participant2Id', '_id username email');
+
+		// Filtra los chats para obtener los datos de los que no son el usuario
+		const filteredChats = chats.map((chat) => {
+			// Hay que hacer doble conversion ya que no se puede castear directamente
+			const populatedChat = chat as unknown as IPopulatedPrivateChat;
+			const { participant1Id, participant2Id } = populatedChat;
+
+			// Retorna los datos de los que no son el
+			return participant1Id._id.toString() !== userId ? participant1Id : participant2Id;
+		});
+
+		return filteredChats;
 	}
 }
 
-// static async getChatsByUserId(userId: string) {
-// 	if (!mongoose.Types.ObjectId.isValid(userId)) return null;
-// 	return PrivateChat.find({ participant1Id: userId });
-// }
 export { PrivateChatService };

@@ -63,7 +63,6 @@ export class SearchDialogComponent implements OnInit {
       .subscribe((response) => {
         if (response) {
           this.user = response.user;
-          console.log(this.user);
         }
       });
   }

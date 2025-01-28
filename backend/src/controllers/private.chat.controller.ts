@@ -12,7 +12,6 @@ class PrivateChatController {
 
 			if (!chats) return res.status(404).json({ ok: false, message: 'No se encontraron chats' });
 
-			console.log(chats);
 			return res.status(200).json({ ok: true, message: 'Chats obtenidos', chats });
 		} catch (error) {
 			console.log(error);

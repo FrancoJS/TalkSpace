@@ -30,10 +30,9 @@ export class ChatComponent implements OnInit {
     // Servicio para compartir datos del usuario que va a recibir el mensaje
     this._socketService.connect(this.user._id);
 
-    this._userSharingService.user$.subscribe((receiverUser) => {
-      if (receiverUser) {
-        this.receiverUser = receiverUser;
-      }
+    this._userSharingService.user$.subscribe({
+      next: (user) => (this.receiverUser = user),
+      error: () => (this.receiverUser = { _id: '', username: '', email: '' }),
     });
 
     this._socketService.listen<{ privateChatId: string }>('joinPrivateChat').subscribe((privateChatId) => {
