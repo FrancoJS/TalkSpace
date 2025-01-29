@@ -4,8 +4,11 @@
     <p><mat-icon (click)="openSearchDialog()" class="add-icon" matSuffix>add</mat-icon></p>
   </div>
   @for(privateChat of privateChats; track privateChat.chatId) {
-
-  <div class="chat-list-item" (click)="openChat(privateChat.chatId, privateChat.user)">
+  <div
+    class="chat-list-item"
+    [ngClass]="{ 'active-chat': activeChatId === privateChat.chatId }"
+    (click)="activeChatId !== privateChat.chatId ? openChat(privateChat.chatId, privateChat.user) : null"
+  >
     <div class="container-item">
       <p>
         {{ privateChat.user.username }} <span>({{ privateChat.user.email }})</span>

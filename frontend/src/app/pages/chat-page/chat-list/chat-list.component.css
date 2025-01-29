@@ -76,3 +76,8 @@ h2 {
 span {
   font-size: 13px;
 }
+
+.active-chat {
+  background-color: #ccc;
+  border-radius: 10px;
+}

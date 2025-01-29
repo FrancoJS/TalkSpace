@@ -11,12 +11,13 @@ import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { IPrivateChat } from '../../../services/api/models/private-chat-interface';
 import { PrivateMessageService } from '../../../services/api/chat/private/private-message.service';
 import { MessagesSharingService } from '../../../services/messages-sharing.service';
+import { NgClass } from '@angular/common';
 
 const MATERIAL_MODULES = [MatIconModule, MatDividerModule, MatListModule];
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [MATERIAL_MODULES],
+  imports: [MATERIAL_MODULES, NgClass],
   templateUrl: './chat-list.component.html',
   styleUrl: './chat-list.component.css',
 })
@@ -28,6 +29,8 @@ export class ChatListComponent implements OnInit {
   private readonly _authApiService = inject(AuthApiService);
   private readonly _privateMessageService = inject(PrivateMessageService);
   private user: IUser = this._authApiService.getUser();
+  // isActive!: boolean;
+  activeChatId!: string;
   privateChats: IPrivateChat[] = [];
   // receiverUser =
 
@@ -65,6 +68,7 @@ export class ChatListComponent implements OnInit {
     this._privateMessageService.getMessagesByPrivateChatId(privateChatId).subscribe((response) => {
       this._userSharingService.setUser(receiverUser);
       this._messagesSharingService.setMessages(response.messages);
+      this.activeChatId = privateChatId;
     });
   }
 }
