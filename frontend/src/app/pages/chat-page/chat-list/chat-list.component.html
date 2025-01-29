@@ -5,7 +5,7 @@
   </div>
   @for(privateChat of privateChats; track privateChat.chatId) {
 
-  <div class="chat-list-item" (click)="openChat(privateChat.chatId)">
+  <div class="chat-list-item" (click)="openChat(privateChat.chatId, privateChat.user)">
     <div class="container-item">
       <p>
         {{ privateChat.user.username }} <span>({{ privateChat.user.email }})</span>

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,22 +9,27 @@ import { IUser } from '../../../services/api/models/user-interfaces';
 import { FormsModule } from '@angular/forms';
 import { SocketService } from '../../../services/socket/socket.service';
 import { AuthApiService } from '../../../services/api/auth/auth-api.service';
+import { MessagesSharingService } from '../../../services/messages-sharing.service';
+import { IMessage } from '../../../services/api/models/private-message-interface';
+import { DatePipe } from '@angular/common';
 const MATERIAL_MODULES = [MatCardModule, MatFormFieldModule, MatButtonModule, MatIconModule, MatInputModule];
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [MATERIAL_MODULES, FormsModule],
+  imports: [MATERIAL_MODULES, FormsModule, DatePipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit {
   private readonly _userSharingService = inject(UserSharingService);
-  private readonly authApiService = inject(AuthApiService);
+  private readonly _messagesSharingService = inject(MessagesSharingService);
+  private readonly _authApiService = inject(AuthApiService);
   private readonly _socketService = inject(SocketService);
-  user: IUser = this.authApiService.getUser();
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+  user: IUser = this._authApiService.getUser();
   receiverUser!: IUser;
   chatInput: string = '';
-  messages: string[] = [];
+  messages: IMessage[] = [];
 
   ngOnInit(): void {
     // Servicio para compartir datos del usuario que va a recibir el mensaje
@@ -35,12 +40,20 @@ export class ChatComponent implements OnInit {
       error: () => (this.receiverUser = { _id: '', username: '', email: '' }),
     });
 
+    this._messagesSharingService.messages$.subscribe((messages) => {
+      if (messages.length > 0) {
+        this.messages = messages;
+        setTimeout(() => this.scrollToBottom(true), 5);
+      }
+    });
+
     this._socketService.listen<{ privateChatId: string }>('joinPrivateChat').subscribe((privateChatId) => {
       return this._socketService.emit('joinPrivateChat', privateChatId);
     });
 
-    this._socketService.listen<{ message: string }>('privateMessage').subscribe((data) => {
-      this.messages.push(data.message as string);
+    this._socketService.listen<{ newMessage: IMessage }>('privateMessage').subscribe((data) => {
+      this.messages.push(data.newMessage as IMessage);
+      setTimeout(() => this.scrollToBottom(), 5);
     });
   }
 
@@ -51,5 +64,13 @@ export class ChatComponent implements OnInit {
       message: this.chatInput,
     });
     this.chatInput = '';
+  }
+
+  private scrollToBottom(initialLoad: boolean = false) {
+    const scrollContainer = this.scrollContainer.nativeElement;
+
+    scrollContainer.style.scrollBehavior = initialLoad ? 'auto' : 'smooth';
+
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
   }
 }

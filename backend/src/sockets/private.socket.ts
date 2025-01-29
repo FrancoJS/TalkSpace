@@ -34,14 +34,14 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 				});
 			}
 
-			await PrivateMessageService.createMessage({
+			const newMessage = await PrivateMessageService.createMessage({
 				...data,
 				privateChatId,
 				isDelivered: receiverSocketId ? true : false,
 			});
 
 			io.to(privateChatId).emit('privateMessage', {
-				message,
+				newMessage,
 			});
 		} catch (error) {
 			console.log(error);

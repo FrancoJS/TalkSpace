@@ -37,7 +37,7 @@ export class LoginPageComponent {
         next: (response) => {
           const { accessToken } = response;
           this.__authApiService.setAccessToken(accessToken);
-          // this.__socketService.connect(_id);
+          this.__authApiService.setUser(response.user);
           this.__router.navigate(['/chat']);
         },
         error: (err) => {

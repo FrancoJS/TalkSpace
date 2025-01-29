@@ -18,7 +18,8 @@
 
 .chat-content {
   padding: 30px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .chat-input {
@@ -41,4 +42,21 @@
 
 span {
   font-size: 16px;
+}
+
+/* Messages */
+
+.username {
+  font-size: 16px;
+  color: #000;
+}
+
+.date {
+  font-size: 13px;
+}
+
+.message {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
 }

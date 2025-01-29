@@ -10,6 +10,7 @@ import { PrivateChatService } from '../../../services/api/chat/private/private.c
 import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { IPrivateChat } from '../../../services/api/models/private-chat-interface';
 import { PrivateMessageService } from '../../../services/api/chat/private/private-message.service';
+import { MessagesSharingService } from '../../../services/messages-sharing.service';
 
 const MATERIAL_MODULES = [MatIconModule, MatDividerModule, MatListModule];
 @Component({
@@ -21,21 +22,20 @@ const MATERIAL_MODULES = [MatIconModule, MatDividerModule, MatListModule];
 })
 export class ChatListComponent implements OnInit {
   private _dialog = inject(MatDialog);
-  private _userSharingService = inject(UserSharingService);
+  private readonly _userSharingService = inject(UserSharingService);
+  private readonly _messagesSharingService = inject(MessagesSharingService);
   private readonly _privateChatService = inject(PrivateChatService);
   private readonly _authApiService = inject(AuthApiService);
   private readonly _privateMessageService = inject(PrivateMessageService);
   private user: IUser = this._authApiService.getUser();
   privateChats: IPrivateChat[] = [];
+  // receiverUser =
 
   ngOnInit(): void {
     if (this.user._id) {
       this._privateChatService.getPrivateChatsByUserId(this.user._id).subscribe({
         next: (response) => {
           this.privateChats = response.chats;
-          console.log(response);
-          console.log(this.user);
-          console.log(this.privateChats);
         },
         error: (err) => {
           console.log(err);
@@ -61,9 +61,10 @@ export class ChatListComponent implements OnInit {
     });
   }
 
-  openChat(privateChatId: string) {
+  openChat(privateChatId: string, receiverUser: IUser) {
     this._privateMessageService.getMessagesByPrivateChatId(privateChatId).subscribe((response) => {
-      console.log(response);
+      this._userSharingService.setUser(receiverUser);
+      this._messagesSharingService.setMessages(response.messages);
     });
   }
 }

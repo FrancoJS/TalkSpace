@@ -30,8 +30,7 @@ class PrivateChatService {
 				chatId: populatedChat._id,
 			};
 
-			participant1Id._id.toString() !== userId ? (chatInfo.user = participant1Id) : (chatInfo.user = participant2Id);
-
+			chatInfo.user = participant1Id._id.toString() !== userId ? participant1Id : participant2Id;
 			return chatInfo;
 		});
 		return filteredChats;
