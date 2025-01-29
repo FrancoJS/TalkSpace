@@ -9,6 +9,7 @@ import connectDB from './database/database.connection';
 import authRouter from './routes/auth.route';
 import userRouter from './routes/user.route';
 import privateChatRouter from './routes/private.chat.route';
+import privateMessageRouter from './routes/private.message';
 import { socketHandler } from './sockets/socket.handler';
 
 const app: Application = express();
@@ -36,7 +37,8 @@ app.use(morgan('dev'));
 
 app.use('/api/auth/', authRouter);
 app.use('/api/user/', userRouter);
-app.use('/api/user/private/', privateChatRouter);
+app.use('/api/user/private/chats/', privateChatRouter);
+app.use('/api/user/private/messages/', privateMessageRouter);
 
 socketHandler(io);
 

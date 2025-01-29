@@ -3,6 +3,6 @@ import { PrivateChatController } from '../controllers/private.chat.controller';
 
 const router = Router();
 
-router.get('/chats/:userId', PrivateChatController.getChats);
+router.get('/:userId', PrivateChatController.getChats);
 
 export default router;

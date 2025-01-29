@@ -1,5 +1,5 @@
-import { IPopulatedPrivateChat } from '../../interfaces/private.chat.interface';
-import { PrivateChat } from '../../models/private.chat.model';
+import { PrivateChat } from '../../../models/private.chat.model';
+import { IPopulatedPrivateChat } from '../../../interfaces/private.chat.interface';
 
 class PrivateChatService {
 	static async createPrivateChat(participant1Id: string, participant2Id: string) {
@@ -25,11 +25,15 @@ class PrivateChatService {
 			// Hay que hacer doble conversion ya que no se puede castear directamente
 			const populatedChat = chat as unknown as IPopulatedPrivateChat;
 			const { participant1Id, participant2Id } = populatedChat;
+			const chatInfo = {
+				user: {},
+				chatId: populatedChat._id,
+			};
 
-			// Retorna los datos de los que no son el
-			return participant1Id._id.toString() !== userId ? participant1Id : participant2Id;
+			participant1Id._id.toString() !== userId ? (chatInfo.user = participant1Id) : (chatInfo.user = participant2Id);
+
+			return chatInfo;
 		});
-
 		return filteredChats;
 	}
 }

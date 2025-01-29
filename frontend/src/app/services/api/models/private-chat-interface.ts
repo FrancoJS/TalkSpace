@@ -1,7 +1,8 @@
-interface IPrivateChat {
-  _id: string;
-  username: string;
-  email: string;
+import { IUser } from './user-interfaces';
+
+export interface IPrivateChat {
+  user: IUser;
+  chatId: string;
 }
 
 export interface IResponsePrivateChats {

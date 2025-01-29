@@ -8,6 +8,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { PrivateChatService } from '../../../services/api/chat/private/private.chat.service';
 import { AuthApiService } from '../../../services/api/auth/auth-api.service';
+import { IPrivateChat } from '../../../services/api/models/private-chat-interface';
+import { PrivateMessageService } from '../../../services/api/chat/private/private-message.service';
 
 const MATERIAL_MODULES = [MatIconModule, MatDividerModule, MatListModule];
 @Component({
@@ -22,14 +24,18 @@ export class ChatListComponent implements OnInit {
   private _userSharingService = inject(UserSharingService);
   private readonly _privateChatService = inject(PrivateChatService);
   private readonly _authApiService = inject(AuthApiService);
+  private readonly _privateMessageService = inject(PrivateMessageService);
   private user: IUser = this._authApiService.getUser();
-  privateChats: IUser[] = [];
+  privateChats: IPrivateChat[] = [];
 
   ngOnInit(): void {
     if (this.user._id) {
       this._privateChatService.getPrivateChatsByUserId(this.user._id).subscribe({
         next: (response) => {
           this.privateChats = response.chats;
+          console.log(response);
+          console.log(this.user);
+          console.log(this.privateChats);
         },
         error: (err) => {
           console.log(err);
@@ -52,6 +58,12 @@ export class ChatListComponent implements OnInit {
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+
+  openChat(privateChatId: string) {
+    this._privateMessageService.getMessagesByPrivateChatId(privateChatId).subscribe((response) => {
+      console.log(response);
     });
   }
 }
