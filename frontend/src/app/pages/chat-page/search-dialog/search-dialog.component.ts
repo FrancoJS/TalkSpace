@@ -34,7 +34,7 @@ export class SearchDialogComponent implements OnInit {
     username: '',
     email: '',
   };
-  result: boolean = true;
+  hasResult: boolean = true;
 
   formGroup = this._formBuilder.group({
     email: ['franco2@gmail.com', [Validators.required, Validators.maxLength(100), Validators.email]],
@@ -54,7 +54,7 @@ export class SearchDialogComponent implements OnInit {
             catchError(() => {
               this.user.username = '';
               this.user.email = '';
-              this.result = false;
+              this.hasResult = false;
               return of(null);
             }),
           ),
@@ -62,13 +62,14 @@ export class SearchDialogComponent implements OnInit {
       )
       .subscribe((response) => {
         if (response) {
+          this.hasResult = true;
           this.user = response.user;
         }
       });
   }
 
   sendMessage(): void {
-    if (this.result) {
+    if (this.hasResult) {
       this._dialogRef.close(this.user);
     }
   }

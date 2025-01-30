@@ -55,7 +55,14 @@ export class ChatListComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (receiverUser: IUser) => {
         if (receiverUser) {
+          this.privateChats.forEach((chat) => {
+            if (receiverUser._id === chat.user._id) {
+              this.openChat(chat.chatId, receiverUser);
+              return;
+            }
+          });
           this._userSharingService.setUser(receiverUser);
+          this._messagesSharingService.setMessages([]);
         }
       },
       error: (err) => {

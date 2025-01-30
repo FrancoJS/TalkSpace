@@ -41,10 +41,8 @@ export class ChatComponent implements OnInit {
     });
 
     this._messagesSharingService.messages$.subscribe((messages) => {
-      if (messages.length > 0) {
-        this.messages = messages;
-        setTimeout(() => this.scrollToBottom(true), 5);
-      }
+      this.messages = messages;
+      setTimeout(() => this.scrollToBottom(true), 5);
     });
 
     this._socketService.listen<{ privateChatId: string }>('joinPrivateChat').subscribe((privateChatId) => {
@@ -52,7 +50,7 @@ export class ChatComponent implements OnInit {
     });
 
     this._socketService.listen<{ newMessage: IMessage }>('privateMessage').subscribe((data) => {
-      this.messages.push(data.newMessage as IMessage);
+      this.messages.push(data.newMessage);
       setTimeout(() => this.scrollToBottom(), 5);
     });
   }

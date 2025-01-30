@@ -7,39 +7,31 @@
     }
   </section>
   <section #scrollContainer class="chat-content">
-    @for(msg of messages; track msg._id; let i = $index) { @if (msg.senderId === user._id){
+    @for(msg of messages; track msg._id; let i = $index) {
     <div class="chat-message">
       <div class="chat-message-user-info">
+        @if (msg.senderId === user._id){
         <!-- Verifica si el mensaje anterior lo envio el mismo usuario para no mostrar el nombre -->
         @if( i > 0 && messages[i-1].senderId !== user._id){
         <p class="username">{{ user.username }}</p>
         <!-- Solamente si el id es 0 va a mostrar el nombre siempre -->
         }@else if( i === 0 ) {
         <p class="username">{{ user.username }}</p>
-        }
-      </div>
-      <div class="message">
-        <p>{{ msg.message }}</p>
-        <p class="date">{{ msg.createdAt | date : 'dd/MM/yyyy h:mm a' }}</p>
-      </div>
-    </div>
-    }@else{
-    <div class="chat-message">
-      <div class="chat-message-user-info">
-        <!-- Verifica si el mensaje anterior lo envio el mismo usuario para no mostrar el nombre -->
+        } } @else {
+        <!--  -->
         @if( i > 0 && messages[i-1].senderId !== receiverUser._id){
         <p class="username">{{ receiverUser.username }}</p>
-        <!-- Solamente si el id es 0 va a mostrar el nombre siempre -->
-        }@else if (i === 0 ) {
+        }@else if (i === 0) {
         <p class="username">{{ receiverUser.username }}</p>
-        }
+
+        } }
       </div>
       <div class="message">
         <p>{{ msg.message }}</p>
         <p class="date">{{ msg.createdAt | date : 'dd/MM/yyyy h:mm a' }}</p>
       </div>
     </div>
-    } } @empty {
+    } @empty {
     <p>No hay mensajes</p>
     }
   </section>
@@ -58,3 +50,21 @@
     }
   </section>
 </div>
+
+<!-- @else{
+  <div class="chat-message">
+    <div class="chat-message-user-info">
+      Verifica si el mensaje anterior lo envio el mismo usuario para no mostrar el nombre
+      @if( i > 0 && messages[i-1].senderId !== receiverUser._id){
+      <p class="username">{{ receiverUser.username }}</p>
+      Solamente si el id es 0 va a mostrar el nombre siempre
+      }@else if (i === 0 ) {
+      <p class="username">{{ receiverUser.username }}</p>
+      }
+    </div>
+    <div class="message">
+      <p>{{ msg.message }}</p>
+      <p class="date">{{ msg.createdAt | date : 'dd/MM/yyyy h:mm a' }}</p>
+    </div>
+  </div>
+  } -->

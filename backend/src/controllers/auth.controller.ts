@@ -10,44 +10,44 @@ import { SessionService } from '../services/session.service/session.service';
 import { Schema } from 'mongoose';
 
 class AuthController {
-	// static async register(req: Request, res: Response): Promise<Response> {
-	// 	try {
-	// 		const { error } = registerValidator.validate(req.body);
-	// 		if (error) return res.status(400).json({ ok: false, message: error.message });
+	static async register(req: Request, res: Response): Promise<Response> {
+		try {
+			const { error } = registerValidator.validate(req.body);
+			if (error) return res.status(400).json({ ok: false, message: error.message });
 
-	// 		const { username, email, password }: IRegisterRequest = req.body;
+			const { username, email, password }: IRegisterRequest = req.body;
 
-	// 		const userExists = await UserService.getUserByEmail(email);
-	// 		if (userExists) return res.status(409).json({ ok: false, message: 'El usuario ya existe' });
+			const userExists = await UserService.getUserByEmail(email);
+			if (userExists) return res.status(409).json({ ok: false, message: 'El usuario ya existe' });
 
-	// 		const hashedPassword = await PasswordService.hashPassword(password);
-	// 		const user = await UserService.createUser({ username, email, password: hashedPassword });
+			const hashedPassword = await PasswordService.hashPassword(password);
+			const user = await UserService.createUser({ username, email, password: hashedPassword });
 
-	// 		const sessionId = crypto.randomUUID();
+			const sessionId = crypto.randomUUID();
 
-	// 		const accessToken = JwtService.generateAccessToken();
-	// 		const refreshToken = JwtService.generateRefreshToken(sessionId);
+			const accessToken = JwtService.generateAccessToken();
+			const refreshToken = JwtService.generateRefreshToken(sessionId);
 
-	// 		res.cookie('refreshToken', refreshToken, {
-	// 			httpOnly: true,
-	// 			maxAge: 7 * 24 * 60 * 60 * 1000,
-	// 			secure: false,
-	// 		});
+			res.cookie('refreshToken', refreshToken, {
+				httpOnly: true,
+				maxAge: 7 * 24 * 60 * 60 * 1000,
+				secure: false,
+			});
 
-	// 		return res.status(201).json({
-	// 			ok: true,
-	// 			message: 'El usuario se registro exitosamente',
-	// 			user: {
-	// 				_id: user._id,
-	// 				username: user.username,
-	// 				email: user.email,
-	// 			},
-	// 			accessToken,
-	// 		});
-	// 	} catch (error) {
-	// 		return res.status(500).json({ ok: false, message: 'Error al registrar el usuario', error });
-	// 	}
-	// }
+			return res.status(201).json({
+				ok: true,
+				message: 'El usuario se registro exitosamente',
+				user: {
+					_id: user._id,
+					username: user.username,
+					email: user.email,
+				},
+				accessToken,
+			});
+		} catch (error) {
+			return res.status(500).json({ ok: false, message: 'Error al registrar el usuario', error });
+		}
+	}
 
 	static async login(req: Request, res: Response): Promise<Response> {
 		try {
