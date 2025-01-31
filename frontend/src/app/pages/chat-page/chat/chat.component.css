@@ -58,5 +58,5 @@ span {
 .message {
   display: flex;
   justify-content: space-between;
-  color: #fff;
+  color: #000;
 }

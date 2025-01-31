@@ -1,39 +1,28 @@
-import { Component, inject, OnInit, ɵɵNgOnChangesFeature } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { Component, inject, OnInit } from '@angular/core';
 import { UserApiService } from '../../../services/api/user/user-api.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
 import { IUser } from '../../../services/api/models/user-interfaces';
+import { ModalService } from '../../../services/modal.service';
 
-const MATERIAL_MODULES = [
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatDialogModule,
-  MatButtonModule,
-  MatCardModule,
-];
 @Component({
   selector: 'app-search-dialog',
   standalone: true,
-  imports: [MATERIAL_MODULES, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './search-dialog.component.html',
   styleUrl: './search-dialog.component.css',
 })
 export class SearchDialogComponent implements OnInit {
   private readonly _userApiService = inject(UserApiService);
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _dialogRef = inject(MatDialogRef<SearchDialogComponent>);
+  private readonly _modalService = inject(ModalService);
+
   user: IUser = {
     _id: '',
     username: '',
     email: '',
   };
+
   hasResult: boolean = true;
 
   formGroup = this._formBuilder.group({
@@ -52,8 +41,11 @@ export class SearchDialogComponent implements OnInit {
         switchMap((value) =>
           this._userApiService.getUserByEmail(value.email as string).pipe(
             catchError(() => {
-              this.user.username = '';
-              this.user.email = '';
+              this.user = {
+                _id: '',
+                username: '',
+                email: '',
+              };
               this.hasResult = false;
               return of(null);
             }),
@@ -69,9 +61,13 @@ export class SearchDialogComponent implements OnInit {
   }
 
   sendMessage(): void {
-    if (this.hasResult) {
-      this._dialogRef.close(this.user);
+    if (this.user._id) {
+      this._modalService.closeModal(this.user);
     }
+  }
+
+  closeSearchDialog(): void {
+    this._modalService.closeModal();
   }
 
   get emailField() {

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-html,
+
+/* html,
 body {
   height: 100%;
 }
@@ -21,7 +22,7 @@ p {
 }
 
 .my-panel {
-  /* border: 1px solid cyan; */
+  border: 1px solid cyan;
   border-radius: 10px;
   background-color: #111;
 }
@@ -33,4 +34,4 @@ p {
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
   background-color: rgba(0, 0, 0, 0.6) !important;
-}
+} */

@@ -12,63 +12,58 @@ import { IPrivateChat } from '../../../services/api/models/private-chat-interfac
 import { PrivateMessageService } from '../../../services/api/chat/private/private-message.service';
 import { MessagesSharingService } from '../../../services/messages-sharing.service';
 import { NgClass } from '@angular/common';
+import { ModalService } from '../../../services/modal.service';
 
 const MATERIAL_MODULES = [MatIconModule, MatDividerModule, MatListModule];
 @Component({
   selector: 'app-chat-list',
   standalone: true,
-  imports: [MATERIAL_MODULES, NgClass],
+  imports: [MATERIAL_MODULES, NgClass, SearchDialogComponent],
   templateUrl: './chat-list.component.html',
   styleUrl: './chat-list.component.css',
 })
 export class ChatListComponent implements OnInit {
-  private _dialog = inject(MatDialog);
   private readonly _userSharingService = inject(UserSharingService);
   private readonly _messagesSharingService = inject(MessagesSharingService);
   private readonly _privateChatService = inject(PrivateChatService);
   private readonly _authApiService = inject(AuthApiService);
   private readonly _privateMessageService = inject(PrivateMessageService);
+  private readonly _modalService = inject(ModalService);
   private user: IUser = this._authApiService.getUser();
-  // isActive!: boolean;
   activeChatId!: string;
   privateChats: IPrivateChat[] = [];
-  // receiverUser =
+  userSelected!: IUser;
+  isModalOpen: boolean = false;
 
   ngOnInit(): void {
     if (this.user._id) {
-      this._privateChatService.getPrivateChatsByUserId(this.user._id).subscribe({
-        next: (response) => {
-          this.privateChats = response.chats;
-        },
-        error: (err) => {
-          console.log(err);
-        },
+      this._privateChatService.getPrivateChatsByUserId(this.user._id).subscribe((response) => {
+        this.privateChats = response.chats;
       });
     }
+    this._modalService.modalUserData$.subscribe((user) => {
+      this.userSelected = user;
+      if (this.userSelected._id.length > 0) {
+        this.privateChats.forEach((chat) => {
+          if (this.userSelected._id !== chat.user._id) {
+            this.openChat(chat.chatId, this.userSelected);
+          } else {
+            this.activeChatId = '';
+            this._messagesSharingService.setMessages([]);
+            this._userSharingService.setUser(this.userSelected);
+          }
+        });
+      }
+      console.log(this.userSelected);
+    });
+
+    this._modalService.modalState$.subscribe((state) => {
+      this.isModalOpen = state;
+    });
   }
 
   openSearchDialog() {
-    const dialogRef = this._dialog.open(SearchDialogComponent, {
-      panelClass: 'my-panel',
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (receiverUser: IUser) => {
-        if (receiverUser) {
-          this.privateChats.forEach((chat) => {
-            if (receiverUser._id === chat.user._id) {
-              this.openChat(chat.chatId, receiverUser);
-              return;
-            }
-          });
-          this._userSharingService.setUser(receiverUser);
-          this._messagesSharingService.setMessages([]);
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this._modalService.openModal();
   }
 
   openChat(privateChatId: string, receiverUser: IUser) {

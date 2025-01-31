@@ -1,17 +1,22 @@
-.chat-list {
-  height: 100%;
+@import 'tailwindcss';
+
+p {
+  margin-bottom: 0;
 }
+/* .chat-list {
+  height: 100%;
+} */
 /* HEADER */
-.chat-header {
+/* .chat-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  /* margin: 0 20px; */
-  /* border-bottom: 1px solid #ccc; */
-}
+  margin: 0 20px;
+  border-bottom: 1px solid #ccc;
+} */
 
-h2 {
+/* h2 {
   font-size: 20px;
 }
 
@@ -28,7 +33,7 @@ h2 {
 .add-icon:hover {
   background-color: #ccc;
   transition: all 0.1s ease-in-out;
-}
+} */
 
 /* LIST */
 
@@ -42,23 +47,23 @@ h2 {
   color: #000;
   } */
 
-.chat-list-item {
-  /* padding: 0 10px; */
+/* .chat-list-item {
+  padding: 0 10px;
   margin: 0 10px;
-}
+} */
 
-.container-item {
-  /* box-sizing: border-box; */
+/* .container-item {
+  box-sizing: border-box;
   padding: 15px 0px;
   margin: 0 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border-top: 1px solid #ccc; */
-  /* border-bottom: 1px solid #ccc; */
-}
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+} */
 
-.chat-list-item:hover {
+/* .chat-list-item:hover {
   background-color: #ccc;
   border-radius: 10px;
   cursor: pointer;
@@ -80,4 +85,4 @@ span {
 .active-chat {
   background-color: #ccc;
   border-radius: 10px;
-}
+} */

@@ -1,4 +1,5 @@
-.navbar {
+@import 'tailwindcss';
+/* .navbar {
   background-color: #000;
   max-height: 100vh;
   height: 100vh;
@@ -76,4 +77,4 @@ li {
   .logo li {
     margin-bottom: 12px;
   }
-}
+} */
