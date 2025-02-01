@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 :root {
-  --grid-chat: 80px 1fr 100px;
+  --grid-chat: 70px 1fr 100px;
   --grid-chat-page: 100px 300px 1fr;
   --messages-width: 60%;
 }

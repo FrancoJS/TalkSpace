@@ -10,8 +10,8 @@
   </div>
   @for(privateChat of privateChats; track privateChat.chatId) {
   <div
-    class="px-2 py-3 mx-2 rounded-sm hover:bg-cyan-700 hover:outline-cyan-600 hover:outline-1 cursor-pointer transition-all duration-100 ease-in-out"
-    [ngClass]="{ 'bg-cyan-700 outline-1 outline-cyan-600': activeChatId === privateChat.chatId }"
+    class="px-2 py-3 mx-2 rounded-sm hover:bg-cyan-600 hover:outline-cyan-600 hover:outline-1 cursor-pointer transition-all duration-100 ease-in-out"
+    [ngClass]="{ 'bg-cyan-600 ': activeChatId === privateChat.chatId }"
     (click)="activeChatId !== privateChat.chatId ? openChat(privateChat.chatId, privateChat.user) : null"
   >
     <div>
