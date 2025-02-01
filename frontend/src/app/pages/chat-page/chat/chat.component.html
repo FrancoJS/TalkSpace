@@ -33,7 +33,7 @@
     } }
   </section>
 
-  <section class="chat-input bg-cyan-950">
+  <section class="chat-input bg-cyan-950 flex items-center p-4">
     @if (receiverUser.username) {
     <!-- <mat-form-field class="form-field" appearance="outline">
       <input
@@ -44,14 +44,15 @@
       />
       <mat-icon (click)="sendMessage()" class="send-icon" matSuffix>send</mat-icon>
     </mat-form-field> -->
-    <div class="h-full flex items-center px-4">
+    <div class="bg-cyan-700 w-full flex items-center rounded-lg px-4 py-3">
       <input
         [(ngModel)]="chatInput"
-        class="block w-full bg-cyan-700 grow text-white placeholder:text-gray-300 text-base px-4 py-4 rounded-lg focus:outline-2 -outline-offset-2 focus:outline-cyan-600"
+        class="block w-full bg-cyan-700 grow text-white placeholder:text-gray-300 text-base focus:outline-none"
         type="text"
         placeholder="Escribe un mensaje a {{ receiverUser.username }} ..."
         (keydown.enter)="sendMessage()"
       />
+      <img (click)="sendMessage()" class="cursor-pointer" src="assets/icons/send-message-icon.svg" alt="" />
     </div>
     }
   </section>
