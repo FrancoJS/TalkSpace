@@ -39,17 +39,14 @@ export class ChatListComponent implements OnInit {
     this._modalService.modalUserData$.subscribe((user) => {
       this.userSelected = user;
       if (this.userSelected._id.length > 0) {
-        this.privateChats.forEach((chat) => {
-          if (this.userSelected._id !== chat.user._id) {
-            this.openChat(chat.chatId, this.userSelected);
-          } else {
-            this.activeChatId = '';
-            this._messagesSharingService.setMessages([]);
-            this._userSharingService.setUser(this.userSelected);
-          }
-        });
+        const chat: IPrivateChat | undefined = this.privateChats.find((chat) => chat.user._id === this.userSelected._id);
+        if (chat) {
+          this.openChat(chat.chatId, this.userSelected);
+          return;
+        }
+        this._messagesSharingService.setMessages([]);
+        this._userSharingService.setUser(this.userSelected);
       }
-      console.log(this.userSelected);
     });
 
     this._modalService.modalState$.subscribe((state) => {
@@ -63,9 +60,10 @@ export class ChatListComponent implements OnInit {
 
   openChat(privateChatId: string, receiverUser: IUser) {
     this._privateMessageService.getMessagesByPrivateChatId(privateChatId).subscribe((response) => {
+      console.log(response);
+      this.activeChatId = privateChatId;
       this._userSharingService.setUser(receiverUser);
       this._messagesSharingService.setMessages(response.messages);
-      this.activeChatId = privateChatId;
     });
   }
 }

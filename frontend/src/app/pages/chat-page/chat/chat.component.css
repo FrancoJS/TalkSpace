@@ -1,4 +1,8 @@
-.container-chat {
+/* :root {
+  --grid-chat: 80px 1fr 100px;
+} */
+
+/* .container-chat {
   height: 100vh;
   display: grid;
   grid-template-rows: 80px 1fr 100px;
@@ -28,10 +32,10 @@
   background-color: #111;
   display: flex;
   align-items: center;
-}
+} */
 
-.chat-input .form-field {
-  /* background-color: #fff; */
+/* .chat-input .form-field {
+  background-color: #fff;
   width: 100%;
   padding-top: 15px;
 }
@@ -42,11 +46,11 @@
 
 span {
   font-size: 16px;
-}
+} */
 
 /* Messages */
 
-.username {
+/* .username {
   font-size: 16px;
   color: #000;
 }
@@ -59,4 +63,9 @@ span {
   display: flex;
   justify-content: space-between;
   color: #000;
-}
+} */
+
+/* p {
+  margin: 0;
+  padding: 0;
+} */
