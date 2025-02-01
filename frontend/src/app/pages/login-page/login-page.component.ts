@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IApiLoginRequest } from '../../services/api/models/user-interfaces';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthApiService } from '../../services/api/auth/auth-api.service';
 
 @Component({
   selector: 'app-login-page',
-  standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })
@@ -39,11 +38,11 @@ export class LoginPageComponent {
       },
     });
   }
-  get emailField() {
+  get emailField(): FormControl {
     return this.form.controls.email;
   }
 
-  get passwordField() {
+  get passwordField(): FormControl {
     return this.form.controls.password;
   }
 }

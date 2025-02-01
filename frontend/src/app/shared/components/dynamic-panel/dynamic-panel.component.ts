@@ -3,10 +3,9 @@ import { ChatListComponent } from '../../../pages/chat-page/chat-list/chat-list.
 ChatListComponent;
 
 @Component({
-  selector: 'app-dynamic-panel',
-  standalone: true,
-  imports: [ChatListComponent],
-  templateUrl: './dynamic-panel.component.html',
-  styleUrl: './dynamic-panel.component.css',
+    selector: 'app-dynamic-panel',
+    imports: [ChatListComponent],
+    templateUrl: './dynamic-panel.component.html',
+    styleUrl: './dynamic-panel.component.css'
 })
 export class DynamicPanelComponent {}

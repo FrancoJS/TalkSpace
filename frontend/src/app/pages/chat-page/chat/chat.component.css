@@ -1,0 +1,19 @@
+/* Personalización básica de la scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho de la scrollbar */
+  height: 8px; /* Altura para scroll horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color del fondo de la scrollbar */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color de la barra */
+  border-radius: 10px; /* Forma redondeada */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color al pasar el mouse */
+}

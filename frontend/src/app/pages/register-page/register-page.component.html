@@ -1,1 +1,120 @@
-<p>register-page works!</p>
+<div class="h-screen flex flex-col justify-center items-center bg-linear-to-br from-cyan-800 to-cyan-950">
+  <div class="bg-cyan-950 py-10 px-10 rounded-lg w-sm shadow-xl border-1 border-cyan-600">
+    <div class="mb-7">
+      <h2 class="text-white text-xl font-bold text-center">TALK SPACE</h2>
+    </div>
+    <div class="mb-4 flex justify-around">
+      <a [routerLink]="['/auth/login']" class="text-white text-lg font-medium text-center cursor-pointer">Iniciar sesion</a>
+      <a class="text-white text-lg font-medium text-center border-b-1 border-cyan-600">Registrarse</a>
+    </div>
+    <form class="flex flex-col gap-6" [formGroup]="form">
+      <div>
+        <label class="text-white block font-medium text-sm" for="email">Nombre de Usuario</label>
+        <div class="mt-1">
+          <input
+            class="block w-full bg-cyan-800 grow text-white placeholder:text-gray-300 text-base px-4 py-2 rounded-lg focus:outline-2 -outline-offset-2 focus:outline-cyan-600"
+            type="text"
+            id="username"
+            formControlName="username"
+          />
+        </div>
+        <div class="h-1 px-2 flex flex-col">
+          @if (usernameField.touched) {
+          <!--  -->
+          @if (usernameField.hasError('required') ) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in">El nombre de usuario es requerido</span>
+          }@if (usernameField.hasError('maxlength')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in"
+            >El nombre de usuario debe tener maximo 30 caracteres</span
+          >
+          } @if (usernameField.hasError('minlength')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in"
+            >El nombre de usuario debe tener al menos 3 caracteres</span
+          >
+          } }
+        </div>
+      </div>
+
+      <div>
+        <label class="text-white block font-medium text-sm" for="email">Correo electronico</label>
+        <div class="mt-1">
+          <input
+            class="block w-full bg-cyan-800 grow text-white placeholder:text-gray-300 text-base px-4 py-2 rounded-lg focus:outline-2 -outline-offset-2 focus:outline-cyan-600"
+            type="email"
+            id="email"
+            formControlName="email"
+          />
+        </div>
+        <div class="h-1 px-2 flex flex-col">
+          @if (emailField.touched) {
+          <!--  -->
+          @if (emailField.hasError('emailValidator') ) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in">Ingrese un correo valido</span>
+          }@if (emailField.hasError('maxlength')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in"
+            >El correo debe tener maximo 100 caracteres</span
+          >
+
+          } @if (emailField.hasError('required')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in">El correo es requerido</span>
+          } }
+        </div>
+      </div>
+      <div class="">
+        <label class="text-white block font-medium text-sm" for="password">Contraseña</label>
+        <div class="mt-1">
+          <input
+            class="block w-full bg-cyan-800 grow text-white placeholder:text-gray-300 text-base px-4 py-2 rounded-lg focus:outline-2 -outline-offset-2 focus:outline-cyan-600"
+            type="password"
+            id="password"
+            formControlName="password"
+          />
+        </div>
+        <div class="h-1 px-2 flex flex-col">
+          @if (passwordField.touched) {
+          <!--  -->
+          @if (passwordField.hasError('required')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in">La contraseña es requerida</span>
+          }@if (passwordField.hasError('minlength')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in"
+            >La contraseña debe tener al menos 8 caracteres</span
+          >
+          } }
+        </div>
+      </div>
+      <div class="">
+        <label class="text-white block font-medium text-sm" for="password">Confirmar contraseña</label>
+        <div class="mt-1">
+          <input
+            class="block w-full bg-cyan-800 grow text-white placeholder:text-gray-300 text-base px-4 py-2 rounded-lg focus:outline-2 -outline-offset-2 focus:outline-cyan-600"
+            type="password"
+            id="password"
+            formControlName="confirmPassword"
+          />
+        </div>
+        <div class="h-1 px-2 flex flex-col">
+          @if (confirmPasswordField.touched || confirmPasswordField.dirty) {
+          <!--  -->
+          @if (confirmPasswordField.hasError('required')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in">Debe confirmar la contraseña</span>
+          } @if (form.hasError('crossPasswordValidator')) {
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in">Las contraseñas no coinciden</span>
+          } }
+        </div>
+      </div>
+      <div>
+        <button
+          (click)="registerUser()"
+          class="w-full mt-2 bg-cyan-600 text-white py-2.5 rounded-lg font-medium shadow-xs text-sm cursor-pointer hover:bg-cyan-700"
+        >
+          CREAR CUENTA
+        </button>
+      </div>
+      <div class="text-center">
+        <a [routerLink]="['/auth/login']" class="text-gray-300 cursor-pointer hover:text-white text-sm"
+          >¿Ya tienes una cuenta?</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

@@ -3,7 +3,7 @@ export interface IApiLoginRequest {
   password: string;
 }
 
-export interface IApiLoginResponse {
+export interface IApiAuthResponse {
   ok: boolean;
   message: string;
   user: IUser;
@@ -20,4 +20,10 @@ export interface IUser {
   _id: string;
   username: string;
   email: string;
+}
+
+export interface IRegisterRequest {
+  username: string;
+  email: string;
+  password: string;
 }

@@ -4,8 +4,8 @@
       <p class="text-white text-xl font-bold text-center">TALK SPACE</p>
     </div>
     <div class="mb-4 flex justify-around">
-      <p class="text-white text-lg font-medium text-center border-b-1 border-cyan-600">Iniciar sesion</p>
-      <p class="text-white text-lg font-medium text-center cursor-pointer">Registrarse</p>
+      <a class="text-white text-lg font-medium text-center border-b-1 border-cyan-600">Iniciar sesion</a>
+      <a [routerLink]="['/auth/register']" class="text-white text-lg font-medium text-center cursor-pointer">Registrarse</a>
     </div>
     @if (failLogin) {
     <div class="mb-4 border-2 border-red-800 text-center rounded-lg p-2">
@@ -67,7 +67,9 @@
         </button>
       </div>
       <div class="text-center">
-        <a href="#" class="text-gray-300 cursor-pointer hover:text-white text-sm">¿Olvidaste la contraseña?</a>
+        <a [routerLink]="['/auth/register']" class="text-gray-300 cursor-pointer hover:text-white text-sm"
+          >¿No tienes una cuenta? Registrate</a
+        >
       </div>
     </form>
   </div>

@@ -11,11 +11,10 @@ import { NgClass } from '@angular/common';
 import { ModalService } from '../../../services/modal.service';
 
 @Component({
-  selector: 'app-chat-list',
-  standalone: true,
-  imports: [NgClass, SearchDialogComponent],
-  templateUrl: './chat-list.component.html',
-  styleUrl: './chat-list.component.css',
+    selector: 'app-chat-list',
+    imports: [NgClass, SearchDialogComponent],
+    templateUrl: './chat-list.component.html',
+    styleUrl: './chat-list.component.css'
 })
 export class ChatListComponent implements OnInit {
   private readonly _userSharingService = inject(UserSharingService);
