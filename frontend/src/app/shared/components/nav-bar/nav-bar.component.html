@@ -1,20 +1,30 @@
 <nav class="navbar h-screen bg-cyan-950 flex flex-col text-white justify-between p-4 items-center">
   <ul class="icons">
-    <li
-      class="rounded-4xl bg-cyan-900 cursor-pointer mb-4 hover:bg-cyan-600 hover:rounded-3xl hover:scale-105 transition-all duration-100 ease-in flex justify-center items-center"
-    >
-      <img class="p-5" src="/assets/icons/chat-icon.svg" alt="chat-icon" />
+    <li>
+      <button
+        class="rounded-4xl bg-cyan-900 cursor-pointer mb-4 hover:bg-cyan-600 hover:rounded-3xl transition-all duration-100 ease-in flex justify-center items-center tooltip-btn"
+        aria-label="Chats"
+      >
+        <img class="p-5" src="/assets/icons/chat-icon.svg" alt="chat-icon" />
+      </button>
     </li>
 
-    <li
-      class="rounded-4xl bg-cyan-900 cursor-pointer mb-4 hover:bg-cyan-600 hover:rounded-3xl hover:scale-105 transition-all duration-100 ease-in flex justify-center items-center"
-    >
-      <img class="p-5" src="/assets/icons/settings-icon.svg" alt="settings-icon" />
+    <li>
+      <button
+        class="rounded-4xl bg-cyan-900 cursor-pointer mb-4 hover:bg-cyan-600 hover:rounded-3xl transition-all duration-100 ease-in flex justify-center items-center tooltip-btn"
+        aria-label="Configuraciones"
+      >
+        <img class="p-5" src="/assets/icons/settings-icon.svg" alt="settings-icon" />
+      </button>
     </li>
-    <li
-      class="rounded-4xl bg-cyan-900 cursor-pointer mb-4 hover:bg-cyan-600 hover:rounded-3xl hover:scale-105 transition-all duration-100 ease-in flex justify-center items-center"
-    >
-      <img class="p-5" src="/assets/icons/logout-icon.svg" alt="settings-icon" />
+    <li>
+      <button
+        class="rounded-4xl bg-cyan-900 cursor-pointer mb-4 hover:bg-cyan-600 hover:rounded-3xl transition-all duration-100 ease-in flex justify-center items-center tooltip-btn"
+        aria-label="Cerrar sesion"
+        (click)="logoutUser()"
+      >
+        <img class="p-5" src="/assets/icons/logout-icon.svg" alt="settings-icon" />
+      </button>
     </li>
   </ul>
   <div class="container-logo">

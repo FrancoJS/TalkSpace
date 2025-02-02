@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IApiLoginRequest, IApiAuthResponse, IRegisterRequest, IUser } from '../models/user-interfaces';
+import { IUser } from '../models/user-interfaces';
 import { IRefreshTokenResponse } from '../models/token-interface';
+import { IApiAuthResponse, IApiLoginRequest, IRegisterRequest } from '../models/auth-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,14 @@ export class AuthApiService {
 
   registerUser(user: IRegisterRequest): Observable<IApiAuthResponse> {
     return this._httpClient.post<IApiAuthResponse>(this.apiAuthUrl + '/user/register', user, { withCredentials: true });
+  }
+
+  logout(): Observable<{ ok: boolean; message: string }> {
+    return this._httpClient.post<{ ok: boolean; message: string }>(
+      this.apiAuthUrl + '/user/logout',
+      {},
+      { withCredentials: true },
+    );
   }
 
   refreshToken(): Observable<IRefreshTokenResponse> {

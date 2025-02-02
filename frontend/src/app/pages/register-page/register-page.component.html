@@ -1,10 +1,12 @@
 <div class="h-screen flex flex-col justify-center items-center bg-linear-to-br from-cyan-800 to-cyan-950">
-  <div class="bg-cyan-950 py-10 px-10 rounded-lg w-sm shadow-xl border-1 border-cyan-600">
+  <div class="bg-cyan-950 py-8 px-10 rounded-lg w-sm shadow-xl border-1 border-cyan-600">
     <div class="mb-7">
       <h2 class="text-white text-xl font-bold text-center">TALK SPACE</h2>
     </div>
     <div class="mb-4 flex justify-around">
-      <a [routerLink]="['/auth/login']" class="text-white text-lg font-medium text-center cursor-pointer">Iniciar sesion</a>
+      <a [routerLink]="['/auth/login']" class="text-white text-lg font-medium text-center cursor-pointer"
+        >Iniciar sesion</a
+      >
       <a class="text-white text-lg font-medium text-center border-b-1 border-cyan-600">Registrarse</a>
     </div>
     <form class="flex flex-col gap-6" [formGroup]="form">
@@ -22,7 +24,9 @@
           @if (usernameField.touched) {
           <!--  -->
           @if (usernameField.hasError('required') ) {
-          <span class="text-red-400 text-xs transition-all duration-300 ease-in">El nombre de usuario es requerido</span>
+          <span class="text-red-400 text-xs transition-all duration-300 ease-in"
+            >El nombre de usuario es requerido</span
+          >
           }@if (usernameField.hasError('maxlength')) {
           <span class="text-red-400 text-xs transition-all duration-300 ease-in"
             >El nombre de usuario debe tener maximo 30 caracteres</span

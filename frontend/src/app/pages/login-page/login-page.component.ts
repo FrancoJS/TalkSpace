@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IApiLoginRequest } from '../../services/api/models/user-interfaces';
 import { Router, RouterLink } from '@angular/router';
 import { AuthApiService } from '../../services/api/auth/auth-api.service';
+import { IApiLoginRequest } from '../../services/api/models/auth-interfaces';
 
 @Component({
   selector: 'app-login-page',

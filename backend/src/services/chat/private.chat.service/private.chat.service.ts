@@ -20,6 +20,7 @@ class PrivateChatService {
 			$or: [{ participant1Id: userId }, { participant2Id: userId }],
 		}).populate<IPopulatedPrivateChat[]>('participant1Id participant2Id', '_id username email');
 
+		// console.log(chats);
 		// Filtra los chats para obtener los datos de los que no son el usuario
 		const filteredChats = chats.map((chat) => {
 			// Hay que hacer doble conversion ya que no se puede castear directamente

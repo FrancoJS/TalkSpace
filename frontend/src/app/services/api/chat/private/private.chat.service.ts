@@ -12,6 +12,8 @@ export class PrivateChatService {
   private readonly _privateChatUrl = environment.baseUrl + environment.privateChatUrl;
 
   getPrivateChatsByUserId(userId: string): Observable<IResponsePrivateChats> {
-    return this._httpClient.get<IResponsePrivateChats>(`${this._privateChatUrl}/chats/${userId}`);
+    return this._httpClient.get<IResponsePrivateChats>(`${this._privateChatUrl}/chats/${userId}`, {
+      withCredentials: true,
+    });
   }
 }

@@ -104,6 +104,17 @@ class AuthController {
 		}
 	}
 
+	static async logout(req: Request, res: Response) {
+		try {
+			const session = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_TOKEN_SECRET!) as { sessionId: string };
+			await SessionService.deleteSession(session.sessionId);
+			res.clearCookie('refreshToken');
+			return res.status(200).json({ ok: true, message: 'Cierre de sesion exitoso' });
+		} catch (error) {
+			return res.status(500).json({ ok: false, message: 'Error al cerrar sesion' });
+		}
+	}
+
 	static async refreshToken(req: Request, res: Response): Promise<Response> {
 		const refreshToken = req.cookies.refreshToken;
 

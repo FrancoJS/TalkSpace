@@ -12,6 +12,6 @@ export class UserApiService {
   private apiUserUrl = environment.baseUrl + environment.userUrl;
 
   getUserByEmail(email: string): Observable<IApiGetUser> {
-    return this.__httpClient.get<IApiGetUser>(`${this.apiUserUrl}/find/${email}`);
+    return this.__httpClient.get<IApiGetUser>(`${this.apiUserUrl}/find/${email}`, { withCredentials: true });
   }
 }

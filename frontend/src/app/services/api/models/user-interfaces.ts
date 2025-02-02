@@ -1,15 +1,3 @@
-export interface IApiLoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface IApiAuthResponse {
-  ok: boolean;
-  message: string;
-  user: IUser;
-  accessToken: string;
-}
-
 export interface IApiGetUser {
   ok: boolean;
   message: string;
@@ -20,10 +8,4 @@ export interface IUser {
   _id: string;
   username: string;
   email: string;
-}
-
-export interface IRegisterRequest {
-  username: string;
-  email: string;
-  password: string;
 }

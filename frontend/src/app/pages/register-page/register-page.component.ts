@@ -4,7 +4,7 @@ import { AuthApiService } from '../../services/api/auth/auth-api.service';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordValidator } from '../../shared/validators/password-validator';
 import { EmailValidator } from '../../shared/validators/email-validator';
-import { IRegisterRequest } from '../../services/api/models/user-interfaces';
+import { IRegisterRequest } from '../../services/api/models/auth-interfaces';
 
 @Component({
   selector: 'app-register-page',

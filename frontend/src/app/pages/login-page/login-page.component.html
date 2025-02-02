@@ -5,7 +5,9 @@
     </div>
     <div class="mb-4 flex justify-around">
       <a class="text-white text-lg font-medium text-center border-b-1 border-cyan-600">Iniciar sesion</a>
-      <a [routerLink]="['/auth/register']" class="text-white text-lg font-medium text-center cursor-pointer">Registrarse</a>
+      <a [routerLink]="['/auth/register']" class="text-white text-lg font-medium text-center cursor-pointer"
+        >Registrarse</a
+      >
     </div>
     @if (failLogin) {
     <div class="mb-4 border-2 border-red-800 text-center rounded-lg p-2">
@@ -24,7 +26,7 @@
           />
         </div>
         <div class="h-2 px-2 flex flex-col">
-          @if (emailField.touched || emailField.dirty) {
+          @if (emailField.touched ) {
           <!--  -->
           @if (emailField.hasError('email') ) {
           <span class="text-red-400 text-xs transition-all duration-300 ease-in">Ingrese un correo valido</span>
@@ -49,7 +51,9 @@
           />
         </div>
         <div class="h-2 px-2 flex flex-col">
-          @if (passwordField.touched || passwordField.dirty) { @if (passwordField.hasError('required')) {
+          @if (passwordField.touched ) {
+          <!--  -->
+          @if (passwordField.hasError('required')) {
           <span class="text-red-400 text-xs transition-all duration-300 ease-in">La contraseña es requerida</span>
           }@if (passwordField.hasError('minlength')) {
           <span class="text-red-400 text-xs transition-all duration-300 ease-in"
@@ -68,7 +72,7 @@
       </div>
       <div class="text-center">
         <a [routerLink]="['/auth/register']" class="text-gray-300 cursor-pointer hover:text-white text-sm"
-          >¿No tienes una cuenta? Registrate</a
+          >¿No tienes una cuenta? Registrate.</a
         >
       </div>
     </form>
