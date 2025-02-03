@@ -6,10 +6,10 @@ import { IUser } from '../../../services/api/models/user-interfaces';
 import { ModalService } from '../../../services/modal.service';
 
 @Component({
-    selector: 'app-search-dialog',
-    imports: [ReactiveFormsModule],
-    templateUrl: './search-dialog.component.html',
-    styleUrl: './search-dialog.component.css'
+  selector: 'app-search-dialog',
+  imports: [ReactiveFormsModule],
+  templateUrl: './search-dialog.component.html',
+  styleUrl: './search-dialog.component.css',
 })
 export class SearchDialogComponent implements OnInit {
   private readonly _userApiService = inject(UserApiService);

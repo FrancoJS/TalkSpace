@@ -1,5 +1,7 @@
 import { PrivateChat } from '../../../models/private.chat.model';
-import { IPopulatedPrivateChat } from '../../../interfaces/private.chat.interface';
+// import { IPopulatedPrivateChat } from '../../../interfaces/private.chat.interface';
+import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 class PrivateChatService {
 	static async createPrivateChat(participant1Id: string, participant2Id: string) {
@@ -15,26 +17,84 @@ class PrivateChatService {
 		});
 	}
 
-	static async getChatsByUserId(userId: string) {
-		const chats = await PrivateChat.find({
-			$or: [{ participant1Id: userId }, { participant2Id: userId }],
-		}).populate<IPopulatedPrivateChat[]>('participant1Id participant2Id', '_id username email');
+	static async getChatsByUserId(Id: string) {
+		const userId = new mongoose.Types.ObjectId(Id);
+		const chats = await PrivateChat.aggregate([
+			{
+				$match: {
+					$or: [{ participant1Id: userId }, { participant2Id: userId }],
+				},
+			},
+			{
+				$lookup: {
+					from: 'privatemessages',
+					localField: '_id',
+					foreignField: 'privateChatId',
+					as: 'messages',
+				},
+			},
+			{
+				$addFields: {
+					unreadMessagesCount: {
+						$size: {
+							$filter: {
+								input: '$messages',
+								as: 'message',
+								cond: {
+									$and: [{ $eq: ['$$message.isRead', false] }, { $ne: ['$$message.senderId', userId] }],
+								},
+							},
+						},
+					},
+				},
+			},
+			{
+				$addFields: {
+					receiverUserId: {
+						$cond: {
+							if: { $eq: ['$participant1Id', userId] },
+							then: '$participant2Id',
+							else: '$participant1Id',
+						},
+					},
+				},
+			},
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'receiverUserId',
+					foreignField: '_id',
+					as: 'receiverUser',
+				},
+			},
+			{
+				$addFields: {
+					receiverUser: { $arrayElemAt: ['$receiverUser', 0] },
+				},
+			},
+			{
+				$sort: { lastMessageAt: -1 },
+			},
+			{
+				$project: {
+					messages: 0,
+					receiverUserId: 0,
+					participant1Id: 0,
+					participant2Id: 0,
+					createdAt: 0,
+					__v: 0,
+					'receiverUser.password': 0,
+					'receiverUser.createdAt': 0,
+					'receiverUser.__v': 0,
+				},
+			},
+		]);
 
-		// console.log(chats);
-		// Filtra los chats para obtener los datos de los que no son el usuario
-		const filteredChats = chats.map((chat) => {
-			// Hay que hacer doble conversion ya que no se puede castear directamente
-			const populatedChat = chat as unknown as IPopulatedPrivateChat;
-			const { participant1Id, participant2Id } = populatedChat;
-			const chatInfo = {
-				user: {},
-				chatId: populatedChat._id,
-			};
+		return chats;
+	}
 
-			chatInfo.user = participant1Id._id.toString() !== userId ? participant1Id : participant2Id;
-			return chatInfo;
-		});
-		return filteredChats;
+	static async updateLastMessageDate(chatId: string) {
+		return PrivateChat.findByIdAndUpdate(chatId, { lastMessageAt: Date.now() }, { new: true });
 	}
 }
 

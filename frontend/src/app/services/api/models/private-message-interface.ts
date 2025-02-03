@@ -4,7 +4,7 @@ export interface IMessage {
   receiverId: string;
   message: string;
   privateChatId: string;
-  isDelivered: boolean;
+  isRead: boolean;
   createdAt: string;
 }
 

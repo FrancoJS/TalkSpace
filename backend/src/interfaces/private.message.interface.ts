@@ -5,7 +5,7 @@ export interface IPrivateMessageModel {
 	receiverId: Schema.Types.ObjectId;
 	message: string;
 	privateChatId: Schema.Types.ObjectId;
-	isDelivered: boolean;
+	isRead: boolean;
 	createdAt: Date;
 }
 
@@ -14,5 +14,5 @@ export interface IPrivateMessage {
 	receiverId: string;
 	message: string;
 	privateChatId?: string;
-	isDelivered?: boolean;
+	isRead?: boolean;
 }

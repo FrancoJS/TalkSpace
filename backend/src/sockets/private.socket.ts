@@ -37,8 +37,9 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 			const newMessage = await PrivateMessageService.createMessage({
 				...data,
 				privateChatId,
-				isDelivered: receiverSocketId ? true : false,
 			});
+
+			await PrivateChatService.updateLastMessageDate(privateChatId);
 
 			io.to(privateChatId).emit('privateMessage', {
 				newMessage,

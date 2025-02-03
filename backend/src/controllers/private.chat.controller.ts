@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { PrivateChatService } from '../services/chat/private.chat.service/private.chat.service';
 
-PrivateChatService;
 class PrivateChatController {
 	static async getChats(req: Request, res: Response) {
 		try {
@@ -9,6 +8,7 @@ class PrivateChatController {
 			if (!userId) return res.status(400).json({ ok: false, message: 'No se proporciono el id del usuario' });
 
 			const chats = await PrivateChatService.getChatsByUserId(userId);
+
 			if (!chats) return res.status(404).json({ ok: false, message: 'No se encontraron chats' });
 
 			return res.status(200).json({ ok: true, message: 'Chats obtenidos', chats });

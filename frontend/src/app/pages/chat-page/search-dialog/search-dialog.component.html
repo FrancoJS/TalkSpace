@@ -8,6 +8,7 @@
             type="email"
             class="block min-w-0 grow text-white placeholder:text-gray-300 focus:outline-none text-lg"
             placeholder="Buscar usuario por email"
+            (keydown.escape)="closeSearchDialog()"
           />
           <img src="assets/icons/search-icon.svg" alt="" />
         </div>

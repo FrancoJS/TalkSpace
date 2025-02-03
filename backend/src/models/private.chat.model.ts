@@ -12,11 +12,18 @@ const PrivateChatSchema = new Schema<IPrivateChat>({
 		ref: 'User',
 		required: true,
 	},
+	lastMessageAt: {
+		type: Date,
+		required: true,
+		default: Date.now,
+	},
 	createdAt: {
 		type: Date,
 		required: true,
 		default: Date.now,
 	},
 });
+
+PrivateChatSchema.index({ lastMessageAt: -1 });
 
 export const PrivateChat = mongoose.model<IPrivateChat>('PrivateChat', PrivateChatSchema, 'privatechats');

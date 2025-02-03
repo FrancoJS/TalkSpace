@@ -7,7 +7,6 @@ import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { MessagesSharingService } from '../../../services/messages-sharing.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
 import { DatePipe } from '@angular/common';
-import { ChatSharingService } from '../../../services/chat-sharing.service';
 
 @Component({
   selector: 'app-chat',
@@ -18,7 +17,6 @@ import { ChatSharingService } from '../../../services/chat-sharing.service';
 export class ChatComponent implements OnInit {
   private readonly _userSharingService = inject(UserSharingService);
   private readonly _messagesSharingService = inject(MessagesSharingService);
-  private readonly _chatSharingService = inject(ChatSharingService);
   private readonly _authApiService = inject(AuthApiService);
   private readonly _socketService = inject(SocketService);
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
@@ -40,16 +38,17 @@ export class ChatComponent implements OnInit {
     // Servicio para compartir los mensajes desde el chatList que busca por el id del chat
     this._messagesSharingService.messages$.subscribe((messages) => {
       this.messages = messages;
+      this.chatInput = '';
       setTimeout(() => this.scrollToBottom(true), 5);
     });
 
     this._socketService.listen<{ privateChatId: string }>('joinPrivateChat').subscribe((privateChatId) => {
+      console.log(privateChatId);
       return this._socketService.emit('joinPrivateChat', privateChatId);
     });
 
     this._socketService.listen<{ newMessage: IMessage }>('privateMessage').subscribe((data) => {
       this.messages.push(data.newMessage);
-      this._chatSharingService.setRefreshChat(true);
       setTimeout(() => this.scrollToBottom(), 5);
     });
   }

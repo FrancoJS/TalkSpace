@@ -1,8 +1,10 @@
 import { IUser } from './user-interfaces';
 
 export interface IPrivateChat {
-  user: IUser;
-  chatId: string;
+  _id: string;
+  lastMessageAt: string;
+  unreadMessagesCount: number;
+  receiverUser: IUser;
 }
 
 export interface IResponsePrivateChats {

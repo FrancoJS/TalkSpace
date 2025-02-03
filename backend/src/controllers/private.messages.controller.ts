@@ -6,6 +6,7 @@ class PrivateMessageController {
 		try {
 			const { privateChatId } = req.params;
 			const messages = await PrivateMessageService.getMessagesByPrivateChatId(privateChatId);
+
 			if (!messages) return res.status(404).json({ ok: false, message: 'No se encontraron mensajes' });
 			return res.status(200).json({ ok: true, message: 'Mensajes obtenidos', messages });
 		} catch (error) {

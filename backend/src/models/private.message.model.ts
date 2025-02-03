@@ -22,7 +22,7 @@ const PrivateMessageSchema = new Schema<IPrivateMessageModel>({
 		ref: 'PrivateChat',
 		required: true,
 	},
-	isDelivered: {
+	isRead: {
 		type: Boolean,
 		default: false,
 	},
