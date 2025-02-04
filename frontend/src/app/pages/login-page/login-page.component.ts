@@ -11,12 +11,12 @@ import { IApiLoginRequest } from '../../services/api/models/auth-interfaces';
   styleUrl: './login-page.component.css',
 })
 export class LoginPageComponent {
-  private readonly __formBuilder = inject(FormBuilder);
-  private readonly __authApiService = inject(AuthApiService);
-  private readonly __router = inject(Router);
+  private readonly _formBuilder = inject(FormBuilder);
+  private readonly _authApiService = inject(AuthApiService);
+  private readonly _router = inject(Router);
   failLogin: boolean = false;
 
-  form = this.__formBuilder.group({
+  form = this._formBuilder.group({
     email: ['', [Validators.email, Validators.required, Validators.maxLength(100)]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
@@ -26,12 +26,12 @@ export class LoginPageComponent {
       this.form.markAllAsTouched();
       return;
     }
-    this.__authApiService.loginUser(this.form.value as IApiLoginRequest).subscribe({
+    this._authApiService.loginUser(this.form.value as IApiLoginRequest).subscribe({
       next: (response) => {
         const { accessToken } = response;
-        this.__authApiService.setAccessToken(accessToken);
-        this.__authApiService.setUser(response.user);
-        this.__router.navigate(['/chat']);
+        this._authApiService.setAccessToken(accessToken);
+        this._authApiService.setUser(response.user);
+        this._router.navigate(['/chat']);
       },
       error: () => {
         this.failLogin = true;

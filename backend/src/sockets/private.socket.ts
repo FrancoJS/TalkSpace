@@ -24,6 +24,7 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 
 			if (!socket.rooms.has(privateChatId)) {
 				socket.join(privateChatId);
+				console.log();
 			}
 
 			const receiverSocketId = usersMap.get(receiverId);
@@ -33,6 +34,8 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 					privateChatId,
 				});
 			}
+
+			socket.on('activeChat', async (data: { activeChat: string }) => {});
 
 			const newMessage = await PrivateMessageService.createMessage({
 				...data,
@@ -54,6 +57,7 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 			const { privateChatId } = data;
 			if (!socket.rooms.has(privateChatId)) {
 				socket.join(privateChatId);
+				console.log('Usuario se unio al chat');
 			}
 		} catch (error) {
 			console.log(error);

@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit {
   receiverUser!: IUser;
   chatInput: string = '';
   messages: IMessage[] = [];
-  activeChatId: string = '';
+  activeChatId!: string;
 
   ngOnInit(): void {
     // Servicio para compartir datos del usuario que va a recibir el mensaje
@@ -43,7 +43,6 @@ export class ChatComponent implements OnInit {
     });
 
     this._socketService.listen<{ privateChatId: string }>('joinPrivateChat').subscribe((privateChatId) => {
-      console.log(privateChatId);
       return this._socketService.emit('joinPrivateChat', privateChatId);
     });
 

@@ -1,39 +1,39 @@
 <section class="">
-  <div class="flex justify-between items-center p-2 mx-2 mb-2">
-    <p class="text-2xl font-bold">Chats</p>
+  <div class="mx-2 mb-2 flex items-center justify-between p-2">
+    <h3 class="text-2xl font-bold">Chats</h3>
     <button
-      class="rounded-full hover:bg-cyan-700 cursor-pointer transition-all duration-75 ease-in-out outline-0"
+      class="cursor-pointer rounded-full outline-0 transition-all duration-75 ease-in-out hover:bg-cyan-700"
       (click)="openSearchDialog()"
     >
       <img class="p-3" src="/assets/icons/add-icon.svg" alt="add-icon" />
     </button>
   </div>
-  @for(privateChat of privateChats; let i = $index; track privateChat._id) {
-  <div
-    class="px-2 py-3 mx-2 rounded-sm group hover:bg-cyan-600 cursor-pointer transition-all duration-100 ease-in-out"
-    [ngClass]="{ 'bg-cyan-600 ': activeChatId === privateChat._id }"
-    (click)="activeChatId !== privateChat._id ? openChat(privateChat._id, privateChat.receiverUser) : null"
-  >
-    <div class="flex justify-between items-center">
-      <p>{{ privateChat.receiverUser.username }}</p>
-      <div class="flex items-center gap-3 text-xs justify-center">
-        {{ privateChat.lastMessageAt | date : 'HH:mm' }}
-        @if (privateChat.unreadMessagesCount > 0 && activeChatId !== privateChat._id) {
-        <div class="bg-red-400 rounded-full w-6 h-6 text-center flex items-center justify-center text-white">
-          <span>
-            {{ privateChat.unreadMessagesCount }}
-          </span>
-        </div>
-        }
-        <div class="opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in-out">
-          <img src="/assets/icons/arrow-down-icon.svg" alt="" />
+  @for (privateChat of privateChats; let i = $index; track privateChat._id) {
+    <div
+      class="group mx-2 cursor-pointer rounded-sm px-2 py-3 transition-all duration-100 ease-in-out hover:bg-cyan-600"
+      [ngClass]="{ 'bg-cyan-600': activeChatId === privateChat._id }"
+      (click)="activeChatId !== privateChat._id ? openChat(privateChat._id, privateChat.receiverUser) : null"
+    >
+      <div class="flex items-center justify-between">
+        <p>{{ privateChat.receiverUser.username }}</p>
+        <div class="flex items-center justify-center gap-3 text-xs">
+          {{ privateChat.lastMessageAt | date: 'HH:mm' }}
+          @if (privateChat.unreadMessagesCount > 0 && activeChatId !== privateChat._id) {
+            <div class="flex h-6 w-6 items-center justify-center rounded-full bg-red-400 text-center text-white">
+              <span>
+                {{ privateChat.unreadMessagesCount }}
+              </span>
+            </div>
+          }
+          <div class="opacity-0 transition-all duration-100 ease-in-out group-hover:opacity-100">
+            <img src="/assets/icons/arrow-down-icon.svg" alt="" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
   }
 </section>
 
 @if (isModalOpen) {
-<app-search-dialog></app-search-dialog>
+  <app-search-dialog></app-search-dialog>
 }

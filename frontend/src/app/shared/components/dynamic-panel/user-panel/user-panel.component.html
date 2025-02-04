@@ -1,0 +1,50 @@
+<div>
+  <h3 class="bg p-4 text-2xl font-bold">Perfil</h3>
+  <div class="flex flex-col items-center justify-center py-4">
+    <div
+      class="group flex h-40 w-40 cursor-pointer items-center justify-center rounded-full bg-cyan-950 transition-all duration-100 ease-in-out hover:bg-gray-900/90"
+      (click)="openModal($event)"
+      [ngClass]="{ 'bg-gray-900/90': isModalOpen }"
+    >
+      <img
+        class="group-hover:opacity-10"
+        src="assets/icons/camera-icon.svg"
+        alt=""
+        [ngClass]="{ 'opacity-10': isModalOpen }"
+      />
+
+      <span
+        class="absolute max-w-full text-center font-bold opacity-0 group-hover:opacity-100"
+        [ngClass]="{ 'opacity-100': isModalOpen }"
+      >
+        CAMBIAR FOTO
+        <hr class="border-0" />
+        DE PERFIL
+      </span>
+    </div>
+
+    <div class="fixed inset-0" (click)="closeModal()" [ngClass]="{ hidden: !isModalOpen }">
+      <div
+        class="absolute flex flex-col justify-center rounded-sm bg-gray-200 text-gray-800 shadow-md"
+        [ngStyle]="{ 'top.px': modalY, 'left.px': modalX }"
+      >
+        <div (click)="$event.stopPropagation()">
+          <label class="flex cursor-pointer gap-2 rounded-sm p-4 hover:bg-gray-300" for="fileInput"
+            ><img src="assets/icons/folder-icon.svg" alt="folder-icon" />Cargar foto</label
+          >
+          <input
+            class="hidden cursor-pointer"
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            (change)="uploadPhoto($event)"
+          />
+        </div>
+        <div class="flex cursor-pointer gap-2 rounded-sm p-4 hover:bg-gray-300" (click)="deletePhoto()">
+          <img src="assets/icons/trash-can-icon.svg" alt="trash-can-icon" />
+          <span>Eliminar foto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

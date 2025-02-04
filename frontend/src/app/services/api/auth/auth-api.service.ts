@@ -11,27 +11,29 @@ import { IApiAuthResponse, IApiLoginRequest, IRegisterRequest } from '../models/
 })
 export class AuthApiService {
   private readonly _httpClient = inject(HttpClient);
-  private readonly apiAuthUrl = environment.baseUrl + environment.authUrl;
+  private readonly _apiAuthUrl = environment.baseUrl + environment.authUrl;
   private accessToken!: string;
   private user!: IUser;
   loginUser(user: IApiLoginRequest): Observable<IApiAuthResponse> {
-    return this._httpClient.post<IApiAuthResponse>(this.apiAuthUrl + '/user/login', user, { withCredentials: true });
+    return this._httpClient.post<IApiAuthResponse>(this._apiAuthUrl + '/user/login', user, { withCredentials: true });
   }
 
   registerUser(user: IRegisterRequest): Observable<IApiAuthResponse> {
-    return this._httpClient.post<IApiAuthResponse>(this.apiAuthUrl + '/user/register', user, { withCredentials: true });
+    return this._httpClient.post<IApiAuthResponse>(this._apiAuthUrl + '/user/register', user, {
+      withCredentials: true,
+    });
   }
 
   logout(): Observable<{ ok: boolean; message: string }> {
     return this._httpClient.post<{ ok: boolean; message: string }>(
-      this.apiAuthUrl + '/user/logout',
+      this._apiAuthUrl + '/user/logout',
       {},
       { withCredentials: true },
     );
   }
 
   refreshToken(): Observable<IRefreshTokenResponse> {
-    return this._httpClient.get<IRefreshTokenResponse>(this.apiAuthUrl + '/token/refresh', {
+    return this._httpClient.get<IRefreshTokenResponse>(this._apiAuthUrl + '/token/refresh', {
       withCredentials: true,
     });
   }

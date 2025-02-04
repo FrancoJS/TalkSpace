@@ -59,6 +59,8 @@ export class ChatListComponent implements OnInit {
       this.isModalOpen = state;
     });
 
+    // this._socketService.emit<string>('activeChat', this.activeChatId);
+
     this._socketService.listen<{ newMessage: IMessage }>('privateMessage').subscribe((data) => {
       const chatIndex = this._findChatIndex(data.newMessage.privateChatId);
       if (chatIndex < 0) return;
@@ -82,11 +84,12 @@ export class ChatListComponent implements OnInit {
     this._privateMessageService.getMessagesByPrivateChatId(privateChatId).subscribe((response) => {
       if (!response.ok) return;
       this.activeChatId = privateChatId;
+      console.log(this.activeChatId);
       this._userSharingService.setUser(receiverUser);
       this._messagesSharingService.setMessages(response.messages);
-
       const chatIndex = this._findChatIndex(privateChatId);
       this.privateChats[chatIndex].unreadMessagesCount = 0;
+      this._socketService.emit<{ privateChatId: string }>('joinPrivateChat', { privateChatId });
     });
   }
 

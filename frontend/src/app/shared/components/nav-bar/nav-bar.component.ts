@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { Router } from '@angular/router';
+import { NavBarButtonComponent } from './nav-bar-button/nav-bar-button.component';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [],
+  imports: [NavBarButtonComponent],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css',
 })
@@ -19,5 +20,9 @@ export class NavBarComponent {
         this._router.navigate(['/auth/login']);
       }
     });
+  }
+
+  testClick() {
+    console.log('Funciona');
   }
 }
