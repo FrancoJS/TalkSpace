@@ -1,7 +1,10 @@
 import { Server, Socket } from 'socket.io';
 import { privateChatHandler } from './private.socket';
+import { ActiveUsersPerChat } from '../models/types/socket.types';
 
 export const usersMap = new Map<string, string>();
+
+export const activeUsersPerChat = new Map<string, ActiveUsersPerChat>();
 export const socketHandler = (io: Server) => {
 	io.on('connection', (socket: Socket) => {
 		console.log(`Usuario conectado: ${socket.id}`);
@@ -12,6 +15,7 @@ export const socketHandler = (io: Server) => {
 
 		socket.on('disconnect', () => {
 			console.log(`User disconnected: ${socket.id}`);
+			activeUsersPerChat.delete(socket.id);
 			usersMap.delete(userId);
 		});
 	});

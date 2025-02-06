@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserSharingService } from '../../../services/user-sharing.service';
 import { IUser } from '../../../services/api/models/user-interfaces';
 import { FormsModule } from '@angular/forms';
@@ -42,17 +42,15 @@ export class ChatComponent implements OnInit {
       setTimeout(() => this.scrollToBottom(true), 5);
     });
 
-    this._socketService.listen<{ privateChatId: string }>('joinPrivateChat').subscribe((privateChatId) => {
-      return this._socketService.emit('joinPrivateChat', privateChatId);
-    });
-
     this._socketService.listen<{ newMessage: IMessage }>('privateMessage').subscribe((data) => {
+      console.log('Hola');
       this.messages.push(data.newMessage);
       setTimeout(() => this.scrollToBottom(), 5);
     });
   }
 
   sendMessage() {
+    if (this.chatInput.length <= 0) return;
     this._socketService.emit('privateMessage', {
       senderId: this.user._id,
       receiverId: this.receiverUser._id,

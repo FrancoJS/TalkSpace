@@ -1,14 +1,14 @@
 import { Server, Socket } from 'socket.io';
 import { IPrivateMessage } from '../interfaces/private.message.interface';
 import mongoose from 'mongoose';
-import { usersMap } from './socket.handler';
+import { activeUsersPerChat, usersMap } from './socket.handler';
 import { PrivateMessageService } from '../services/chat/private.messages.service/private.message.service';
 import { PrivateChatService } from '../services/chat/private.chat.service/private.chat.service';
 
 export const privateChatHandler = (io: Server, socket: Socket) => {
 	socket.on('privateMessage', async (data: IPrivateMessage) => {
 		try {
-			const { senderId, receiverId, message } = data;
+			const { senderId, receiverId } = data;
 			if (!mongoose.Types.ObjectId.isValid(senderId) || !mongoose.Types.ObjectId.isValid(receiverId)) {
 				throw new Error('senderId o receiverId invalidos');
 			}
@@ -22,25 +22,21 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 				privateChatId = newPrivateChat._id.toString();
 			}
 
-			if (!socket.rooms.has(privateChatId)) {
-				socket.join(privateChatId);
-				console.log();
-			}
+			const receiverSocketId: string | undefined = usersMap.get(receiverId);
 
-			const receiverSocketId = usersMap.get(receiverId);
-
-			if (receiverSocketId) {
-				io.to(receiverSocketId).emit('joinPrivateChat', {
-					privateChatId,
-				});
-			}
-
-			socket.on('activeChat', async (data: { activeChat: string }) => {});
+			const isRead = isReceiverUserActive(receiverSocketId, privateChatId);
 
 			const newMessage = await PrivateMessageService.createMessage({
 				...data,
 				privateChatId,
+				isRead,
 			});
+
+			if (receiverSocketId) {
+				io.to(receiverSocketId).emit('privateMessageNotification', {
+					newMessage,
+				});
+			}
 
 			await PrivateChatService.updateLastMessageDate(privateChatId);
 
@@ -48,19 +44,32 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 				newMessage,
 			});
 		} catch (error) {
+			// TODO: manejar error con un evento hacia el front para mostrar algun mensaje al cliente
 			console.log(error);
 		}
 	});
 
-	socket.on('joinPrivateChat', async (data: { privateChatId: string }) => {
-		try {
-			const { privateChatId } = data;
-			if (!socket.rooms.has(privateChatId)) {
-				socket.join(privateChatId);
-				console.log('Usuario se unio al chat');
-			}
-		} catch (error) {
-			console.log(error);
-		}
+	socket.on('joinPrivateChat', (data: { privateChatId: string }) => {
+		const { privateChatId } = data;
+		if (socket.rooms.has(privateChatId)) return;
+
+		activeUsersPerChat.set(socket.id, {
+			activeChatId: privateChatId,
+		});
+
+		socket.join(privateChatId);
+	});
+
+	socket.on('leavePrivateChat', (data: { privateChatId: string }) => {
+		const { privateChatId } = data;
+		if (!socket.rooms.has(privateChatId)) return;
+
+		socket.leave(privateChatId);
 	});
 };
+
+function isReceiverUserActive(receiverSocketId: string | undefined, privateChatId: string): boolean {
+	if (!receiverSocketId || activeUsersPerChat.size === 0) return false;
+	const isReceiverUserActive = activeUsersPerChat.get(receiverSocketId);
+	return Boolean(isReceiverUserActive && isReceiverUserActive.activeChatId === privateChatId);
+}
