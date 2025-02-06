@@ -8,6 +8,7 @@ import { ILoginRequest, IRegisterRequest } from '../interfaces/auth.interfaces';
 import crypto from 'node:crypto';
 import { SessionService } from '../services/session.service/session.service';
 import { Schema } from 'mongoose';
+import { profile } from 'node:console';
 
 class AuthController {
 	static async register(req: Request, res: Response): Promise<Response> {
@@ -49,6 +50,7 @@ class AuthController {
 					_id: user._id,
 					username: user.username,
 					email: user.email,
+					profilePictureUrl: user.profilePictureUrl,
 				},
 				accessToken,
 			});
@@ -96,6 +98,7 @@ class AuthController {
 					_id: user._id,
 					username: user.username,
 					email: user.email,
+					profilePictureUrl: user.profilePictureUrl,
 				},
 				accessToken,
 			});
@@ -146,6 +149,7 @@ class AuthController {
 					_id: user._id,
 					username: user.username,
 					email: user.email,
+					profilePictureUrl: user.profilePictureUrl,
 				},
 				accessToken,
 			});

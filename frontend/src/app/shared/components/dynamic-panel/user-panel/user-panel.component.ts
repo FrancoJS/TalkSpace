@@ -1,5 +1,8 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { AuthApiService } from '../../../../services/api/auth/auth-api.service';
+import { UserApiService } from '../../../../services/api/user/user-api.service';
+import { IUser } from '../../../../services/api/models/user-interfaces';
 
 @Component({
   selector: 'app-user-panel',
@@ -8,20 +11,25 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './user-panel.component.css',
 })
 export class UserPanelComponent {
+  private _selectedFile!: File;
+  private readonly _authApiService = inject(AuthApiService);
+  private readonly _userApiService = inject(UserApiService);
   isModalOpen: boolean = false;
   modalX: number = 0;
   modalY: number = 0;
-  private _selectedFile!: File;
+  user: IUser = this._authApiService.getUser();
 
-  uploadPhoto(event: Event) {
+  uploadImage(event: Event) {
     const input = event.target as HTMLInputElement;
 
-    if (input?.files) {
-      console.log(input.files[0]);
-    }
+    if (!input?.files) return;
+
+    this._userApiService.uploadProfilePicture(this.user._id, input.files[0]).subscribe((response) => {
+      console.log(response);
+    });
   }
 
-  deletePhoto() {
+  deleteImage() {
     console.log('Foto eliminada');
   }
 

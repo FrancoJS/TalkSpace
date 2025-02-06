@@ -7,8 +7,8 @@
       [ngClass]="{ 'bg-gray-900/90': isModalOpen }"
     >
       <img
-        class="group-hover:opacity-10"
-        src="assets/icons/camera-icon.svg"
+        class="rounded-full border-2 border-white group-hover:opacity-10"
+        src="{{ user.profilePictureUrl || 'assets/icons/camera-icon.svg' }}"
         alt=""
         [ngClass]="{ 'opacity-10': isModalOpen }"
       />
@@ -37,10 +37,10 @@
             type="file"
             id="fileInput"
             accept="image/*"
-            (change)="uploadPhoto($event)"
+            (change)="uploadImage($event)"
           />
         </div>
-        <div class="flex cursor-pointer gap-2 rounded-sm p-4 hover:bg-gray-300" (click)="deletePhoto()">
+        <div class="flex cursor-pointer gap-2 rounded-sm p-4 hover:bg-gray-300" (click)="deleteImage()">
           <img src="assets/icons/trash-can-icon.svg" alt="trash-can-icon" />
           <span>Eliminar foto</span>
         </div>

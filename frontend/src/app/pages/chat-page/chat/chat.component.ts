@@ -6,11 +6,11 @@ import { SocketService } from '../../../services/socket/socket.service';
 import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { MessagesSharingService } from '../../../services/messages-sharing.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule, DatePipe, NgClass],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })

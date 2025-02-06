@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatListComponent } from '../../../pages/chat-page/chat-list/chat-list.component';
 // import { UserPanelComponent } from './user-panel/user-panel.component';
-// ChatListComponent;
 
 @Component({
   selector: 'app-dynamic-panel',

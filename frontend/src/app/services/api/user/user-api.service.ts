@@ -8,10 +8,18 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class UserApiService {
-  private readonly __httpClient = inject(HttpClient);
+  private readonly _httpClient = inject(HttpClient);
   private apiUserUrl = environment.baseUrl + environment.userUrl;
 
   getUserByEmail(email: string): Observable<IApiGetUser> {
-    return this.__httpClient.get<IApiGetUser>(`${this.apiUserUrl}/find/${email}`, { withCredentials: true });
+    return this._httpClient.get<IApiGetUser>(`${this.apiUserUrl}/find/${email}`, { withCredentials: true });
+  }
+
+  uploadProfilePicture(userId: string, image: File) {
+    const formData = new FormData();
+    formData.append('image', image);
+    return this._httpClient.post(`${this.apiUserUrl}/upload-profile-picture/${userId}`, formData, {
+      withCredentials: true,
+    });
   }
 }

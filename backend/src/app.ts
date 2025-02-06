@@ -11,6 +11,7 @@ import userRouter from './routes/user.route';
 import privateChatRouter from './routes/private.chat.route';
 import privateMessageRouter from './routes/private.message';
 import { socketHandler } from './sockets/socket.handler';
+import fileUpload from 'express-fileupload';
 
 const app: Application = express();
 export const server = http.createServer(app);
@@ -20,6 +21,11 @@ app.use(
 	cors({
 		origin: process.env.FRONT_URL,
 		credentials: true,
+	})
+);
+app.use(
+	fileUpload({
+		useTempFiles: true,
 	})
 );
 

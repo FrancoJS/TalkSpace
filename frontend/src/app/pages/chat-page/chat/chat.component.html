@@ -1,40 +1,50 @@
-<div class="h-screen grid grid-rows-(--grid-chat)">
-  <section class="bg-cyan-800 shadow-xl flex items-center p-4 border-b-1 border-cyan-900">
+<div class="grid h-screen grid-rows-(--grid-chat)">
+  <section class="flex items-center border-b-1 border-cyan-900 bg-cyan-800 p-4 shadow-xl">
     @if (receiverUser.username && receiverUser.email) {
-    <div class="text-white flex text-xl">
-      <span>{{ receiverUser.username }}</span>
-    </div>
+      <div class="flex items-center gap-3 text-xl text-white">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full border-1 border-white">
+          <img
+            class="object-cover"
+            src="{{ receiverUser.profilePictureUrl || 'assets/icons/user-icon.svg' }}"
+            alt=""
+            [ngClass]="{ 'rounded-full': receiverUser.profilePictureUrl }"
+          />
+        </div>
+        <span>{{ receiverUser.username }}</span>
+      </div>
     }
   </section>
-  <section #scrollContainer class="bg-cyan-800 overflow-y-scroll flex flex-col p-6 gap-2">
-    @for(msg of messages; track msg._id; let i = $index) {
-    <!--  -->
-    @if (receiverUser._id === msg.senderId) {
-    <div class="flex flex-col items-start justify-start">
-      <div class="max-w-(--messages-width) bg-cyan-900 break-words py-2 px-4 rounded-r-lg rounded-tl-lg text-white">
-        <p>
-          {{ msg.message }}
-        </p>
-      </div>
-      <p class="text-xs text-gray-300">{{ msg.createdAt | date : 'MMM dd HH:mm' }}</p>
-    </div>
-    } @if (user._id === msg.senderId) {
-    <div class="flex flex-col items-end justify-end">
-      <div
-        class="max-w-(--messages-width) bg-cyan-600 break-words py-2 px-4 rounded-l-lg rounded-tr-lg text-white border-1 border-cyan-700"
-      >
-        <p>
-          {{ msg.message }}
-        </p>
-      </div>
-      <p class="text-xs text-gray-300">{{ msg.createdAt | date : 'MMM dd HH:mm' }}</p>
-    </div>
-    } }
+  <section #scrollContainer class="flex flex-col gap-2 overflow-y-scroll bg-cyan-800 p-6">
+    @for (msg of messages; track msg._id; let i = $index) {
+      <!--  -->
+      @if (receiverUser._id === msg.senderId) {
+        <div class="flex flex-col items-start justify-start">
+          <div class="max-w-(--messages-width) rounded-tl-lg rounded-r-lg bg-cyan-900 px-4 py-2 break-words text-white">
+            <p>
+              {{ msg.message }}
+            </p>
+          </div>
+          <p class="text-xs text-gray-300">{{ msg.createdAt | date: 'MMM dd HH:mm' }}</p>
+        </div>
+      }
+      @if (user._id === msg.senderId) {
+        <div class="flex flex-col items-end justify-end">
+          <div
+            class="max-w-(--messages-width) rounded-l-lg rounded-tr-lg border-1 border-cyan-700 bg-cyan-600 px-4 py-2 break-words text-white"
+          >
+            <p>
+              {{ msg.message }}
+            </p>
+          </div>
+          <p class="text-xs text-gray-300">{{ msg.createdAt | date: 'MMM dd HH:mm' }}</p>
+        </div>
+      }
+    }
   </section>
 
-  <section class="chat-input bg-cyan-950 flex items-center p-4">
+  <section class="chat-input flex items-center bg-cyan-950 p-4">
     @if (receiverUser.username) {
-    <!-- <mat-form-field class="form-field" appearance="outline">
+      <!-- <mat-form-field class="form-field" appearance="outline">
       <input
         [(ngModel)]="chatInput"
         (keydown.enter)="sendMessage()"
@@ -43,16 +53,16 @@
       />
       <mat-icon (click)="sendMessage()" class="send-icon" matSuffix>send</mat-icon>
     </mat-form-field> -->
-    <div class="bg-cyan-700 w-full flex items-center rounded-lg px-4 py-3">
-      <input
-        [(ngModel)]="chatInput"
-        class="block w-full bg-cyan-700 grow text-white placeholder:text-gray-300 text-base focus:outline-none"
-        type="text"
-        placeholder="Escribe un mensaje a {{ receiverUser.username }} ..."
-        (keydown.enter)="sendMessage()"
-      />
-      <img (click)="sendMessage()" class="cursor-pointer" src="assets/icons/send-message-icon.svg" alt="" />
-    </div>
+      <div class="flex w-full items-center rounded-lg bg-cyan-700 px-4 py-3">
+        <input
+          [(ngModel)]="chatInput"
+          class="block w-full grow bg-cyan-700 text-base text-white placeholder:text-gray-300 focus:outline-none"
+          type="text"
+          placeholder="Escribe un mensaje a {{ receiverUser.username }} ..."
+          (keydown.enter)="sendMessage()"
+        />
+        <img (click)="sendMessage()" class="cursor-pointer" src="assets/icons/send-message-icon.svg" alt="" />
+      </div>
     }
   </section>
 </div>

@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { privateChatHandler } from './private.socket';
-import { ActiveUsersPerChat } from '../models/types/socket.types';
+import { ActiveUsersPerChat } from '../interfaces/types/socket.types';
 
 export const usersMap = new Map<string, string>();
 
