@@ -31,7 +31,7 @@ class UserController {
 		}
 	}
 
-	static async uploadImage(req: Request, res: Response) {
+	static async uploadProfileImage(req: Request, res: Response) {
 		try {
 			const { userId } = req.params;
 			if (!userId) return res.status(400).json({ ok: false, message: 'No se proporciono el id del usuario' });
@@ -39,12 +39,14 @@ class UserController {
 			const image = req.files?.image as UploadedFile;
 
 			const result = await cloudinary.uploader.upload(image.tempFilePath, {
+				folder: 'profiles-pictures',
 				transformation: {
-					width: 250,
-					height: 250,
+					width: 400,
+					height: 400,
+					quality: 'auto:best',
 					crop: 'fill',
-					radius: 'max',
 					aspect_ratio: '1:1',
+					fetch_format: 'auto',
 				},
 			});
 

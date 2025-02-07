@@ -5,13 +5,12 @@ import { UserApiService } from '../../../../services/api/user/user-api.service';
 import { IUser } from '../../../../services/api/models/user-interfaces';
 
 @Component({
-  selector: 'app-user-panel',
+  selector: 'app-user-profile',
   imports: [NgStyle, NgClass],
-  templateUrl: './user-panel.component.html',
-  styleUrl: './user-panel.component.css',
+  templateUrl: './user-profile.component.html',
+  styleUrl: './user-profile.component.css',
 })
-export class UserPanelComponent {
-  private _selectedFile!: File;
+export class UserProfileComponent {
   private readonly _authApiService = inject(AuthApiService);
   private readonly _userApiService = inject(UserApiService);
   isModalOpen: boolean = false;

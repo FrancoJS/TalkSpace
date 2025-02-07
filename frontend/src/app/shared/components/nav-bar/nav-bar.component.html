@@ -1,22 +1,25 @@
 <nav class="navbar flex h-screen flex-col items-center justify-between bg-cyan-950 p-4 text-white">
   <ul class="icons">
     <app-nav-bar-button
-      (click)="testClick()"
+      (click)="showChats()"
       iconSrc="/assets/icons/chat-icon.svg"
       ariaLabel="Chats"
       imgAlt="Chats"
+      [isActive]="selectedComponent === 'Chats'"
     ></app-nav-bar-button>
     <app-nav-bar-button
-      (click)="testClick()"
+      (click)="showUserProfile()"
       iconSrc="/assets/icons/user-icon.svg"
       ariaLabel="Perfil de usuario"
       imgAlt="Perfil de usuario"
+      [isActive]="selectedComponent === 'UserProfile'"
     ></app-nav-bar-button>
     <app-nav-bar-button
-      (click)="testClick()"
+      (click)="showConfig()"
       iconSrc="/assets/icons/settings-icon.svg"
       ariaLabel="Configuraciones"
       imgAlt="Configuraciones"
+      [isActive]="selectedComponent === 'Config'"
     ></app-nav-bar-button>
     <app-nav-bar-button
       (click)="logoutUser()"

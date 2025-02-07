@@ -1,4 +1,8 @@
 <div class="container h-screen bg-cyan-900 pt-3 pb-3 text-gray-300">
-  <app-chat-list></app-chat-list>
-  <!-- <app-user-panel></app-user-panel> -->
+  @if (selectedComponent === 'Chats') {
+    <app-chat-list></app-chat-list>
+  }
+  @if (selectedComponent === 'UserProfile') {
+    <app-user-profile></app-user-profile>
+  }
 </div>

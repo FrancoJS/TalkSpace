@@ -2,14 +2,14 @@
   <h3 class="bg p-4 text-2xl font-bold">Perfil</h3>
   <div class="flex flex-col items-center justify-center py-4">
     <div
-      class="group flex h-40 w-40 cursor-pointer items-center justify-center rounded-full bg-cyan-950 transition-all duration-100 ease-in-out hover:bg-gray-900/90"
+      class="group flex h-40 w-40 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-cyan-950 transition-all duration-100 ease-in-out hover:bg-gray-900/90"
       (click)="openModal($event)"
       [ngClass]="{ 'bg-gray-900/90': isModalOpen }"
     >
       <img
-        class="rounded-full border-2 border-white group-hover:opacity-10"
+        class="object-cover group-hover:opacity-10"
         src="{{ user.profilePictureUrl || 'assets/icons/camera-icon.svg' }}"
-        alt=""
+        alt="Profile picture"
         [ngClass]="{ 'opacity-10': isModalOpen }"
       />
 
