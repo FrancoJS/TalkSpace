@@ -2,13 +2,11 @@
   <section class="flex items-center border-b-1 border-cyan-900 bg-cyan-800 p-4 shadow-xl">
     @if (receiverUser.username && receiverUser.email) {
       <div class="flex items-center gap-3 text-xl text-white">
-        <div class="flex h-12 w-12 items-center justify-center rounded-full border-1 border-white">
-          <img
-            class="object-cover"
-            src="{{ receiverUser.profilePictureUrl || 'assets/icons/user-icon.svg' }}"
-            alt=""
-            [ngClass]="{ 'rounded-full': receiverUser.profilePictureUrl }"
-          />
+        <div
+          class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full"
+          [ngClass]="{ 'border-1 border-white': !receiverUser.profilePictureUrl }"
+        >
+          <img class="object-cover" src="{{ receiverUser.profilePictureUrl || 'assets/icons/user-icon.svg' }}" alt="" />
         </div>
         <span>{{ receiverUser.username }}</span>
       </div>
@@ -44,15 +42,6 @@
 
   <section class="chat-input flex items-center bg-cyan-950 p-4">
     @if (receiverUser.username) {
-      <!-- <mat-form-field class="form-field" appearance="outline">
-      <input
-        [(ngModel)]="chatInput"
-        (keydown.enter)="sendMessage()"
-        matInput
-        placeholder="Escribe un mensaje a {{ receiverUser.username }}"
-      />
-      <mat-icon (click)="sendMessage()" class="send-icon" matSuffix>send</mat-icon>
-    </mat-form-field> -->
       <div class="flex w-full items-center rounded-lg bg-cyan-700 px-4 py-3">
         <input
           [(ngModel)]="chatInput"
@@ -66,27 +55,3 @@
     }
   </section>
 </div>
-
-<!-- <div class="chat-message">
-  <div class="chat-message-user-info">
-    @if (msg.senderId === user._id){
-    Verifica si el mensaje anterior lo envio el mismo usuario para no mostrar el nombre
-    @if( i > 0 && messages[i-1].senderId !== user._id){
-    <p class="username">{{ user.username }}</p>
-    Solamente si el id es 0 va a mostrar el nombre siempre
-    }@else if( i === 0 ) {
-    <p class="username">{{ user.username }}</p>
-    } } @else {
-    
-    @if( i > 0 && messages[i-1].senderId !== receiverUser._id){
-    <p class="username">{{ receiverUser.username }}</p>
-    }@else if (i === 0) {
-    <p class="username">{{ receiverUser.username }}</p>
-
-    } }053345
-  </div>
-  <div class="message">
-    <p>{{ msg.message }}</p>
-    <p class="date">{{ msg.createdAt | date : 'dd/MM/yyyy h:mm a' }}</p>
-  </div>
-</div> -->

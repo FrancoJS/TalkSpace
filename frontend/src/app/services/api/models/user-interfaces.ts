@@ -1,4 +1,4 @@
-export interface IApiGetUser {
+export interface IApiUser {
   ok: boolean;
   message: string;
   user: IUser;

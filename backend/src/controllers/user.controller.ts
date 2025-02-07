@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services/user.service/user.service';
 import { UploadedFile } from 'express-fileupload';
-
 import { cloudinary } from '../config/cloudinaryConfig';
 
 class UserController {
@@ -28,6 +27,23 @@ class UserController {
 			});
 		} catch (error) {
 			return res.status(500).json({ ok: false, message: 'Error al obtener el usuario' });
+		}
+	}
+
+	static async updateUsername(req: Request, res: Response) {
+		try {
+			const { userId } = req?.params;
+			const { username } = req?.body;
+			if (!userId) return res.status(400).json({ ok: false, message: 'No se proporciono el id del usuario ' });
+			if (!username) return res.status(400).json({ ok: false, message: 'No se proporciono nombre de usuario' });
+
+			const user = await UserService.updateUsername(userId, username);
+			console.log(user);
+			if (!user) return res.status(404).json({ ok: false, message: 'No se encontro el usuario' });
+
+			return res.status(200).json({ ok: true, message: 'Nombre de usuario actualizado', user });
+		} catch (error) {
+			return res.status(500).json({ ok: false, message: 'Error al actualizar el nombre de usuario' });
 		}
 	}
 

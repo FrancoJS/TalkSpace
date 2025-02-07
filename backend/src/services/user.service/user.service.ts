@@ -14,6 +14,10 @@ class UserService {
 		return User.findById(id);
 	}
 
+	static async updateUsername(userId: string, username: string) {
+		return User.findByIdAndUpdate(userId, { username }, { new: true });
+	}
+
 	static async updateProfilePictureUrl(userId: string, profilePictureUrl: string) {
 		return User.findByIdAndUpdate(userId, { profilePictureUrl }, { new: true });
 	}

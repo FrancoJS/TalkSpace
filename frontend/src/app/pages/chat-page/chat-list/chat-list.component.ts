@@ -11,7 +11,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { ModalService } from '../../../services/modal.service';
 import { SocketService } from '../../../services/socket/socket.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
-import { ignoreElements } from 'rxjs';
+import { ChatSharingService } from '../../../services/chat-sharing.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -27,6 +27,7 @@ export class ChatListComponent implements OnInit {
   private readonly _privateMessageService = inject(PrivateMessageService);
   private readonly _modalService = inject(ModalService);
   private readonly _socketService = inject(SocketService);
+  private readonly _chatSharingService = inject(ChatSharingService);
   private user: IUser = this._authApiService.getUser();
   activeChatId!: string;
   privateChats: IPrivateChat[] = [];
@@ -60,8 +61,6 @@ export class ChatListComponent implements OnInit {
       this.isModalOpen = state;
     });
 
-    // this._socketService.emit<string>('activeChat', this.activeChatId);
-
     this._socketService.listen<{ newMessage: IMessage }>('privateMessageNotification').subscribe((data) => {
       const chatIndex = this._findChatIndex(data.newMessage.privateChatId);
       if (chatIndex < 0) return;
@@ -75,6 +74,10 @@ export class ChatListComponent implements OnInit {
       if (chatIndex === 0) return;
       this._updateMessagePosition(chatIndex);
     });
+
+    this._chatSharingService.lastChatId$.subscribe((chatId) => {
+      this.activeChatId = chatId;
+    });
   }
 
   openSearchDialog() {
@@ -83,12 +86,12 @@ export class ChatListComponent implements OnInit {
 
   openChat(privateChatId: string, receiverUser: IUser) {
     if (this.activeChatId) {
-      console.log(this.activeChatId);
       this._socketService.emit<{ privateChatId: string }>('leavePrivateChat', { privateChatId: this.activeChatId });
     }
     this._privateMessageService.getMessagesByPrivateChatId(privateChatId).subscribe((response) => {
       if (!response.ok) return;
       this.activeChatId = privateChatId;
+      this._chatSharingService.setLastChatId(this.activeChatId);
       this._userSharingService.setUser(receiverUser);
       this._messagesSharingService.setMessages(response.messages);
       const chatIndex = this._findChatIndex(privateChatId);
