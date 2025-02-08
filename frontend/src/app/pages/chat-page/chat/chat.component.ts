@@ -7,6 +7,7 @@ import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { MessagesSharingService } from '../../../services/messages-sharing.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
 import { DatePipe, NgClass } from '@angular/common';
+import { ChatSharingService } from '../../../services/chat-sharing.service';
 
 @Component({
   selector: 'app-chat',
@@ -15,16 +16,16 @@ import { DatePipe, NgClass } from '@angular/common';
   styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit {
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   private readonly _userSharingService = inject(UserSharingService);
   private readonly _messagesSharingService = inject(MessagesSharingService);
   private readonly _authApiService = inject(AuthApiService);
   private readonly _socketService = inject(SocketService);
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   user: IUser = this._authApiService.getUser();
   receiverUser!: IUser;
   chatInput: string = '';
   messages: IMessage[] = [];
-  activeChatId!: string;
+  activeChatId: string = '';
 
   ngOnInit(): void {
     // Servicio para compartir datos del usuario que va a recibir el mensaje
@@ -32,7 +33,7 @@ export class ChatComponent implements OnInit {
 
     this._userSharingService.user$.subscribe({
       next: (user) => (this.receiverUser = user),
-      error: () => (this.receiverUser = { _id: '', username: '', email: '' }),
+      error: () => (this.receiverUser = { _id: '', username: '', email: '', profilePictureUrl: '' }),
     });
 
     // Servicio para compartir los mensajes desde el chatList que busca por el id del chat
@@ -43,7 +44,6 @@ export class ChatComponent implements OnInit {
     });
 
     this._socketService.listen<{ newMessage: IMessage }>('privateMessage').subscribe((data) => {
-      console.log('Hola');
       this.messages.push(data.newMessage);
       setTimeout(() => this.scrollToBottom(), 5);
     });
@@ -51,6 +51,7 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     if (this.chatInput.length <= 0) return;
+
     this._socketService.emit('privateMessage', {
       senderId: this.user._id,
       receiverId: this.receiverUser._id,

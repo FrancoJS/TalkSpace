@@ -7,7 +7,7 @@ import { IUser } from './api/models/user-interfaces';
 })
 export class ModalService {
   private modalState = new BehaviorSubject<boolean>(false);
-  private modalSource = new BehaviorSubject<IUser>({ _id: '', username: '', email: '' });
+  private modalSource = new BehaviorSubject<IUser>({ _id: '', username: '', email: '', profilePictureUrl: '' });
 
   modalState$ = this.modalState.asObservable();
   modalUserData$ = this.modalSource.asObservable();
@@ -16,7 +16,7 @@ export class ModalService {
     this.modalState.next(true);
   }
 
-  closeModal(user: IUser = { _id: '', username: '', email: '' }) {
+  closeModal(user: IUser = { _id: '', username: '', email: '', profilePictureUrl: '' }) {
     this.modalState.next(false);
     if (user) {
       this.modalSource.next(user);

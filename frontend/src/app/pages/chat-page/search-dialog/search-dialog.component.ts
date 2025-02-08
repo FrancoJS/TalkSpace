@@ -20,6 +20,7 @@ export class SearchDialogComponent implements OnInit {
     _id: '',
     username: '',
     email: '',
+    profilePictureUrl: '',
   };
 
   hasResult: boolean = true;
@@ -44,6 +45,7 @@ export class SearchDialogComponent implements OnInit {
                 _id: '',
                 username: '',
                 email: '',
+                profilePictureUrl: '',
               };
               this.hasResult = false;
               return of(null);

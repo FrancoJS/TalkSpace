@@ -58,10 +58,8 @@ export class UserProfileComponent {
   }
 
   updateUsername() {
-    console.log(this.inputUsername, this.user.username);
     if (this.user.username === this.inputUsername) return;
     this._userApiService.updateUsername(this.user._id, this.inputUsername).subscribe((response) => {
-      console.log(response);
       this._authApiService.setUser(response.user);
     });
   }

@@ -12,7 +12,7 @@
     <div
       class="group mx-2 cursor-pointer rounded-sm px-2 py-3 transition-all duration-100 ease-in-out hover:bg-cyan-600"
       [ngClass]="{ 'bg-cyan-600': activeChatId === privateChat._id }"
-      (click)="activeChatId !== privateChat._id ? openChat(privateChat._id, privateChat.receiverUser) : null"
+      (click)="activeChatId !== privateChat._id ? openChat(privateChat._id, privateChat.receiverUser, i) : null"
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">

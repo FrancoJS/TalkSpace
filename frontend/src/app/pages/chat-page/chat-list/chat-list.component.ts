@@ -12,6 +12,7 @@ import { ModalService } from '../../../services/modal.service';
 import { SocketService } from '../../../services/socket/socket.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
 import { ChatSharingService } from '../../../services/chat-sharing.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-chat-list',
@@ -44,11 +45,13 @@ export class ChatListComponent implements OnInit {
       this.userSelected = user;
 
       if (this.userSelected._id.length <= 0) return;
+
       const chat: IPrivateChat | undefined = this.privateChats.find(
         (chat) => chat.receiverUser._id === this.userSelected._id,
       );
       if (chat) {
-        this.openChat(chat._id, this.userSelected);
+        const chatIndex = this._findChatIndex(chat._id);
+        this.openChat(chat._id, this.userSelected, chatIndex);
         return;
       }
 
@@ -62,20 +65,35 @@ export class ChatListComponent implements OnInit {
     });
 
     this._socketService.listen<{ newMessage: IMessage }>('privateMessageNotification').subscribe((data) => {
-      const chatIndex = this._findChatIndex(data.newMessage.privateChatId);
-      if (chatIndex < 0) return;
+      const { newMessage } = data;
+      const chatIndex = this._findChatIndex(newMessage.privateChatId);
+      if (chatIndex < 0) {
+        this._privateChatService.getPrivateChatsByUserId(this.user._id).subscribe((response) => {
+          this.privateChats = response.chats;
+        });
+        return;
+      }
 
-      this.privateChats[chatIndex].lastMessageAt = data.newMessage.createdAt;
+      this.privateChats[chatIndex].lastMessageAt = newMessage.createdAt;
 
-      if (data.newMessage.privateChatId !== this.activeChatId) {
+      if (newMessage.privateChatId !== this.activeChatId && newMessage.senderId !== this.user._id) {
         this.privateChats[chatIndex].unreadMessagesCount++;
       }
 
       if (chatIndex === 0) return;
+
       this._updateMessagePosition(chatIndex);
     });
 
+    this._socketService.listen<void>('newChat').subscribe(() => {
+      this._privateChatService.getPrivateChatsByUserId(this.user._id).subscribe((response) => {
+        this.privateChats = response.chats;
+        this.activeChatId = this.privateChats[0]._id;
+      });
+    });
+
     this._chatSharingService.lastChatId$.subscribe((chatId) => {
+      if (chatId === this.activeChatId || !chatId) return;
       this.activeChatId = chatId;
     });
   }
@@ -84,7 +102,7 @@ export class ChatListComponent implements OnInit {
     this._modalService.openModal();
   }
 
-  openChat(privateChatId: string, receiverUser: IUser) {
+  openChat(privateChatId: string, receiverUser: IUser, chatIndex: number) {
     if (this.activeChatId) {
       this._socketService.emit<{ privateChatId: string }>('leavePrivateChat', { privateChatId: this.activeChatId });
     }
@@ -94,7 +112,6 @@ export class ChatListComponent implements OnInit {
       this._chatSharingService.setLastChatId(this.activeChatId);
       this._userSharingService.setUser(receiverUser);
       this._messagesSharingService.setMessages(response.messages);
-      const chatIndex = this._findChatIndex(privateChatId);
       this.privateChats[chatIndex].unreadMessagesCount = 0;
       this._socketService.emit<{ privateChatId: string }>('joinPrivateChat', { privateChatId });
     });
@@ -102,6 +119,7 @@ export class ChatListComponent implements OnInit {
 
   private _updateMessagePosition(chatIndex: number) {
     const [chat] = this.privateChats.splice(chatIndex, 1);
+
     this.privateChats.unshift(chat);
   }
 
