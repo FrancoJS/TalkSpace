@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/user.service/user.service';
 import { UploadedFile } from 'express-fileupload';
 import { cloudinary } from '../config/cloudinaryConfig';
+import { userNameValidator } from '../validators/user.validator';
 
 class UserController {
 	static async getUserByEmail(req: Request, res: Response): Promise<Response> {
@@ -19,11 +20,7 @@ class UserController {
 			return res.status(200).json({
 				ok: true,
 				message: 'Usuario encontrado',
-				user: {
-					_id: user._id,
-					username: user.username,
-					email: user.email,
-				},
+				user,
 			});
 		} catch (error) {
 			return res.status(500).json({ ok: false, message: 'Error al obtener el usuario' });
@@ -34,6 +31,9 @@ class UserController {
 		try {
 			const { userId } = req?.params;
 			const { username } = req?.body;
+			const error = userNameValidator.validate({ username });
+
+			if (error.error) return res.status(400).json({ ok: false, message: error.error.details[0].message });
 			if (!userId) return res.status(400).json({ ok: false, message: 'No se proporciono el id del usuario ' });
 			if (!username) return res.status(400).json({ ok: false, message: 'No se proporciono nombre de usuario' });
 

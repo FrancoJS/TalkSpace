@@ -50,7 +50,10 @@
 </div>
 <div class="bg-cyan flex flex-col gap-2 px-8">
   <h3 class="text-lg font-medium">Nombre de usuario</h3>
-  <div class="flex gap-2 border-b-2 py-2" [ngClass]="{ 'border-cyan-500': isFocused, 'border-cyan-700': !isFocused }">
+  <div
+    class="flex items-center gap-2 border-b-2 py-2"
+    [ngClass]="{ 'border-cyan-500': isFocused, 'border-cyan-700': !isFocused }"
+  >
     <!-- {{ isFocused }} -->
     <input
       class="w-full outline-none"
@@ -59,9 +62,26 @@
       [(ngModel)]="inputUsername"
       (focus)="isFocused = true"
       (blur)="resetInput()"
+      value="{{ user.username }}"
+      maxlength="{{ maxLenght }}"
     />
-    <img src="/assets/icons/check-icon.svg" alt="" (click)="updateUsername()" [ngClass]="{ hidden: !isFocused }" />
+    <div class="flex items-center gap-2">
+      <span
+        class=""
+        [ngClass]="{
+          'text-red-500': inputUsername.length >= maxLenght,
+        }"
+        >{{ maxLenght - inputUsername.length }}</span
+      >
 
-    <img src="/assets/icons/edit-icon.svg" alt="" (click)="updateUsername()" [ngClass]="{ hidden: isFocused }" />
+      <img src="/assets/icons/check-icon.svg" alt="" (click)="updateUsername()" [ngClass]="{ hidden: !isFocused }" />
+      <img src="/assets/icons/edit-icon.svg" alt="" (click)="updateUsername()" [ngClass]="{ hidden: isFocused }" />
+    </div>
   </div>
+  @if (inputUsername.length >= maxLenght) {
+    <span class="text-sm text-red-400">El nombre de usuario debe tener maximo {{ maxLenght }} caracteres</span>
+  }
+  @if (inputUsername.length < minLenght) {
+    <span class="text-sm text-red-400">El nombre de usuario debe tener al menos {{ minLenght }} caracteres</span>
+  }
 </div>

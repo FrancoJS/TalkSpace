@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { UserSharingService } from '../../../services/user-sharing.service';
 import { IUser } from '../../../services/api/models/user-interfaces';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +7,6 @@ import { AuthApiService } from '../../../services/api/auth/auth-api.service';
 import { MessagesSharingService } from '../../../services/messages-sharing.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
 import { DatePipe, NgClass } from '@angular/common';
-import { ChatSharingService } from '../../../services/chat-sharing.service';
 
 @Component({
   selector: 'app-chat',

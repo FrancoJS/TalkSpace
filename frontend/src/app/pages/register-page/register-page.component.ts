@@ -5,11 +5,12 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { PasswordValidator } from '../../shared/validators/password-validator';
 import { EmailValidator } from '../../shared/validators/email-validator';
 import { IRegisterRequest } from '../../services/api/models/auth-interfaces';
+import { HomeNavBarComponent } from '../../shared/components/home-nav-bar/home-nav-bar.component';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, HomeNavBarComponent],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
 })
@@ -17,6 +18,7 @@ export class RegisterPageComponent {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authApiService = inject(AuthApiService);
   private readonly _router = inject(Router);
+  failRegister: boolean = false;
 
   form = this._formBuilder.group(
     {
@@ -44,6 +46,9 @@ export class RegisterPageComponent {
         this._authApiService.setAccessToken(accessToken);
         this._authApiService.setUser(user);
         this._router.navigate(['/chat']);
+      },
+      error: (error) => {
+        this.failRegister = true;
       },
     });
   }

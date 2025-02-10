@@ -10,8 +10,9 @@ export const chatGuard: CanActivateFn = (): Observable<boolean> => {
   const authApiService = inject(AuthApiService);
   let accessToken = authApiService.getAccessToken();
 
-  if (accessToken && !jwtHelper.isTokenExpired(accessToken)) {
-    return of(true);
+  if (!accessToken || jwtHelper.isTokenExpired(accessToken)) {
+    router.navigate(['/auth/login']);
+    return of(false);
   }
 
   return authApiService.refreshToken().pipe(

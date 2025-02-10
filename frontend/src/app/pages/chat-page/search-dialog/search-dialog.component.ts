@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { UserApiService } from '../../../services/api/user/user-api.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
@@ -69,6 +69,13 @@ export class SearchDialogComponent implements OnInit {
 
   closeSearchDialog(): void {
     this._modalService.closeModal();
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDownEsc(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.closeSearchDialog();
+    }
   }
 
   get emailField() {

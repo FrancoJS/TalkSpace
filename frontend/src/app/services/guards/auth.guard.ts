@@ -10,7 +10,8 @@ export const authGuard: CanActivateFn = (): Observable<boolean> => {
   const authApiService = inject(AuthApiService);
   let accessToken = authApiService.getAccessToken();
 
-  if (accessToken || !jwtHelper.isTokenExpired(accessToken)) {
+  if (accessToken && !jwtHelper.isTokenExpired(accessToken)) {
+    router.navigate(['/chat']);
     return of(false);
   }
 
@@ -18,6 +19,7 @@ export const authGuard: CanActivateFn = (): Observable<boolean> => {
     map((response) => {
       authApiService.setAccessToken(response.accessToken);
       authApiService.setUser(response.user);
+
       router.navigate(['/chat']);
       return false;
     }),

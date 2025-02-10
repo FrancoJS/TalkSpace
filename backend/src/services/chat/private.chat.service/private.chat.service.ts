@@ -1,7 +1,5 @@
 import { PrivateChat } from '../../../models/private.chat.model';
-// import { IPopulatedPrivateChat } from '../../../interfaces/private.chat.interface';
 import mongoose from 'mongoose';
-import { Types } from 'mongoose';
 
 class PrivateChatService {
 	static async createPrivateChat(participant1Id: string, participant2Id: string) {

@@ -12,7 +12,6 @@ import { ModalService } from '../../../services/modal.service';
 import { SocketService } from '../../../services/socket/socket.service';
 import { IMessage } from '../../../services/api/models/private-message-interface';
 import { ChatSharingService } from '../../../services/chat-sharing.service';
-import { response } from 'express';
 
 @Component({
   selector: 'app-chat-list',

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PrivateChatService } from '../services/chat/private.chat.service/private.chat.service';
 
 class PrivateChatController {
-	static async getChats(req: Request, res: Response) {
+	static async getChatsByUserId(req: Request, res: Response) {
 		try {
 			const { userId } = req.params;
 			if (!userId) return res.status(400).json({ ok: false, message: 'No se proporciono el id del usuario' });

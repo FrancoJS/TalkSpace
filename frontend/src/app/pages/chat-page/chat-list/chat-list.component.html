@@ -1,13 +1,16 @@
-<section class="">
-  <div class="mx-2 mb-2 flex items-center justify-between p-2">
-    <h3 class="text-2xl font-bold">Chats</h3>
-    <button
-      class="cursor-pointer rounded-full outline-0 transition-all duration-75 ease-in-out hover:bg-cyan-700"
-      (click)="openSearchDialog()"
-    >
-      <img class="p-3" src="/assets/icons/add-icon.svg" alt="add-icon" />
-    </button>
+<section class="h-full max-h-full overflow-y-auto">
+  <div class="sticky top-0 z-999 bg-cyan-900">
+    <div class="mx-2 mb-2 flex items-center justify-between p-2">
+      <h3 class="text-2xl font-bold">Chats</h3>
+      <button
+        class="cursor-pointer rounded-full outline-0 transition-all duration-75 ease-in-out hover:bg-cyan-700"
+        (click)="openSearchDialog()"
+      >
+        <img class="p-3" src="/assets/icons/add-icon.svg" alt="add-icon" />
+      </button>
+    </div>
   </div>
+
   @for (privateChat of privateChats; let i = $index; track privateChat._id) {
     <div
       class="group mx-2 cursor-pointer rounded-sm px-2 py-3 transition-all duration-100 ease-in-out hover:bg-cyan-600"
@@ -42,6 +45,16 @@
             <img src="/assets/icons/arrow-down-icon.svg" alt="" />
           </div>
         </div>
+      </div>
+    </div>
+  } @empty {
+    <div class="flex h-60 items-center p-8 text-center text-white">
+      <div
+        class="empty flex cursor-pointer flex-col items-center gap-2 rounded-md p-10 hover:bg-cyan-800"
+        (click)="openSearchDialog()"
+      >
+        <span class="">No se encontraron chats, agrega a alguien y empieza a chatear</span>
+        <img src="/assets/icons/add-icon.svg" alt="add-icon" />
       </div>
     </div>
   }

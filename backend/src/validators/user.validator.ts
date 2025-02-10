@@ -33,4 +33,13 @@ const loginValidator = Joi.object({
 	}),
 });
 
-export { registerValidator, loginValidator };
+const userNameValidator = Joi.object({
+	username: Joi.string().min(3).max(30).required().messages({
+		'string.empty': 'El nombre de usuario no puede estar vacio',
+		'any.required': 'El nombre de usuario es requerido',
+		'string.min': 'El nombre de usuario debe tener al menos 3 caracteres',
+		'string.max': 'El nombre de usuario debe tener 30 caracteres como maximo',
+	}),
+});
+
+export { registerValidator, loginValidator, userNameValidator };

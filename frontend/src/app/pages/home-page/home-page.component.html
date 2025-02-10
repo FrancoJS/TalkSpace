@@ -1,0 +1,59 @@
+<div class="grid h-screen grid-rows-[1fr_auto] bg-linear-to-br from-cyan-900">
+  <app-home-nav-bar class="fixed"></app-home-nav-bar>
+  <div class="flex flex-col items-center justify-center gap-8">
+    <div class="bg-cyan-950 p-10">
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >T</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >A</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >L</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >K</span
+      >
+      <span
+        class="ml-8 p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >S</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >P</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >A</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >C</span
+      >
+      <span
+        class="p-2 text-8xl text-white transition-all duration-75 ease-linear hover:cursor-default hover:font-extrabold"
+        >E</span
+      >
+    </div>
+    <div class="">
+      <p class="cursor-default text-2xl font-semibold tracking-tight text-gray-900">
+        Chatea en tiempo real, unete a otros y encuentra tu comunidad.
+      </p>
+    </div>
+
+    <button
+      [routerLink]="['/chat']"
+      class="flex items-center gap-3 rounded-full bg-cyan-700 px-4 py-3 text-white transition-transform duration-100 ease-linear hover:cursor-pointer hover:bg-cyan-800 active:scale-95 active:bg-cyan-950"
+    >
+      <img class="w-4" src="/assets/icons/chat-icon.svg" alt="" />
+      <span class="text-base/6 font-medium tracking-tight">Comienza a chatear</span>
+    </button>
+  </div>
+  <footer class="cursor-default p-2 text-center">
+    <p class="text-sm text-gray-900">© 2025 Talk Space. Creado por FrancoJS.</p>
+  </footer>
+</div>

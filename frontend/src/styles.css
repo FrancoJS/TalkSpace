@@ -5,3 +5,20 @@
   --grid-chat-page: 100px 350px 1fr;
   --messages-width: 60%;
 }
+
+::-webkit-scrollbar {
+  width: 8px; /* Ancho de la scrollbar */
+  height: 8px; /* Altura para scroll horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color del fondo de la scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color de la barra */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color al pasar el mouse */
+}

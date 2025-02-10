@@ -16,10 +16,4 @@ export class PrivateChatService {
       withCredentials: true,
     });
   }
-
-  getPrivateChatById(privateChatId: string, userId: string): Observable<IResponsePrivateChats> {
-    return this._httpClient.get<IResponsePrivateChats>(`${this._privateChatUrl}/chats/one/${privateChatId}/${userId}`, {
-      withCredentials: true,
-    });
-  }
 }

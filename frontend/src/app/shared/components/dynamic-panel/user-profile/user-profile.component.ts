@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { AuthApiService } from '../../../../services/api/auth/auth-api.service';
 import { UserApiService } from '../../../../services/api/user/user-api.service';
 import { IUser } from '../../../../services/api/models/user-interfaces';
@@ -11,15 +11,22 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
   private readonly _authApiService = inject(AuthApiService);
   private readonly _userApiService = inject(UserApiService);
   isModalOpen: boolean = false;
   modalX: number = 0;
   modalY: number = 0;
-  user: IUser = this._authApiService.getUser();
-  inputUsername: string = this.user.username;
+  user!: IUser;
+  inputUsername!: string;
   isFocused: boolean = false;
+  maxLenght: number = 30;
+  minLenght: number = 3;
+
+  ngOnInit(): void {
+    this.user = this._authApiService.getUser();
+    this.inputUsername = this.user.username;
+  }
 
   uploadImage(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -32,7 +39,6 @@ export class UserProfileComponent {
   }
 
   resetInput() {
-    this.inputUsername = this.user.username;
     this.isFocused = false;
   }
 
@@ -59,8 +65,21 @@ export class UserProfileComponent {
 
   updateUsername() {
     if (this.user.username === this.inputUsername) return;
-    this._userApiService.updateUsername(this.user._id, this.inputUsername).subscribe((response) => {
-      this._authApiService.setUser(response.user);
+    if (this.inputUsername.length < this.minLenght) {
+      this.inputUsername = this.user.username;
+      return;
+    }
+    this._userApiService.updateUsername(this.user._id, this.inputUsername).subscribe({
+      next: (response) => {
+        this._authApiService.setUser(response.user);
+        this.inputUsername = response.user.username;
+        this.isFocused = false;
+        console.log(response);
+      },
+      error: (error) => {
+        console.log(error);
+        this.inputUsername = this.user.username;
+      },
     });
   }
 }

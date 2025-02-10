@@ -1,12 +1,12 @@
-<div class="fixed inset-0 bg-gray-900/60 flex justify-center items-center z-50" (click)="closeSearchDialog()">
-  <div class="p-5 bg-cyan-900 w-lg rounded-lg shadow-md" (click)="$event.stopPropagation()">
+<div class="fixed inset-0 z-1000 flex items-center justify-center bg-gray-900/60" (click)="closeSearchDialog()">
+  <div class="w-lg rounded-lg bg-cyan-900 p-5 shadow-md" (click)="$event.stopPropagation()">
     <ng-container [formGroup]="formGroup">
       <div class="mt-2">
         <div class="flex items-center rounded-md bg-cyan-950 px-4 py-6 inset-shadow-sm inset-shadow-gray-800">
           <input
             formControlName="email"
             type="email"
-            class="block min-w-0 grow text-white placeholder:text-gray-300 focus:outline-none text-lg"
+            class="block min-w-0 grow text-lg text-white placeholder:text-gray-300 focus:outline-none"
             placeholder="Buscar usuario por email"
             (keydown.escape)="closeSearchDialog()"
           />
@@ -14,25 +14,26 @@
         </div>
       </div>
     </ng-container>
-    <div class="h-6 flex flex-col gap-1 py-2 px-4">
+    <div class="flex h-6 flex-col gap-1 px-4 py-2">
       @if (emailField.hasError('email')) {
-      <span class="text-red-400 text-sm">Ingrese un correo valido</span>
-      } @if (emailField.hasError('maxlength')) {
-      <span class="text-red-400 text-sm">El correo debe tener 100 caracteres como maximo</span>
+        <span class="text-sm text-red-400">Ingrese un correo valido</span>
+      }
+      @if (emailField.hasError('maxlength')) {
+        <span class="text-sm text-red-400">El correo debe tener 100 caracteres como maximo</span>
       }
     </div>
     <div class="px-4">
       @if (user.username && user.email) {
-      <div class="flex justify-between items-center">
-        <p class="text-white text-lg">Usuario: {{ user.username }}</p>
-        <button
-          (click)="sendMessage()"
-          class="flex gap-1 text-sm bg-cyan-600 p-2.5 rounded-md cursor-pointer text-white hover:bg-cyan-700"
-        >
-          Enviar mensaje
-          <img src="assets/icons/send-icon.svg" alt="" />
-        </button>
-      </div>
+        <div class="flex items-center justify-between">
+          <p class="text-lg text-white">Usuario: {{ user.username }}</p>
+          <button
+            (click)="sendMessage()"
+            class="flex cursor-pointer gap-1 rounded-md bg-cyan-600 p-2.5 text-sm text-white hover:bg-cyan-700"
+          >
+            Enviar mensaje
+            <img src="assets/icons/send-icon.svg" alt="" />
+          </button>
+        </div>
       }
     </div>
   </div>

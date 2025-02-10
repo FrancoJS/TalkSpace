@@ -22,6 +22,11 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 				privateChatId = newPrivateChat._id.toString();
 			}
 
+			if (!socket.rooms.has(privateChatId)) {
+				socket.join(privateChatId);
+				socket.emit('newChat');
+			}
+
 			const receiverSocketId: string | undefined = usersMap.get(receiverId);
 
 			const isRead = isReceiverUserActive(receiverSocketId, privateChatId);
@@ -37,6 +42,10 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 					newMessage,
 				});
 			}
+
+			socket.emit('privateMessageNotification', {
+				newMessage,
+			});
 
 			await PrivateChatService.updateLastMessageDate(privateChatId);
 
