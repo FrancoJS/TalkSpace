@@ -1,13 +1,14 @@
 .tooltip-btn::after {
   content: attr(aria-label);
   position: absolute;
-  left: 88px;
+  left: 250px;
   font-size: 12px;
   background-color: #222;
   padding: 8px;
   border-radius: 4px;
   pointer-events: none;
   opacity: 0;
+  z-index: 1000;
 }
 
 .tooltip-btn:hover::after {

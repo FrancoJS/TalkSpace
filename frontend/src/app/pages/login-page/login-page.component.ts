@@ -4,10 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthApiService } from '../../services/api/auth/auth-api.service';
 import { IApiLoginRequest } from '../../services/api/models/auth-interfaces';
 import { HomeNavBarComponent } from '../../shared/components/home-nav-bar/home-nav-bar.component';
+import { HomeFooterComponent } from '../../shared/components/home-footer/home-footer.component';
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule, RouterLink, HomeNavBarComponent],
+  imports: [ReactiveFormsModule, RouterLink, HomeNavBarComponent, HomeFooterComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })

@@ -1,17 +1,17 @@
-<div class="grid h-screen grid-rows-[1fr_auto] bg-linear-to-br from-cyan-800">
+<div class="grid h-screen grid-rows-[1fr_auto]">
   <app-home-nav-bar class="fixed"></app-home-nav-bar>
 
   <div class="grid grid-cols-[1fr_1fr] self-center justify-self-center rounded-xl border-1 border-gray-400 shadow-md">
     <div class="w-sm md:max-w-3xl">
-      @if (failLogin) {
-        <div class="mb-4 rounded-lg border-2 border-red-800 p-2 text-center">
-          <span class="text-base font-light text-red-400">Usuario o contraseña incorrectos. Intente nuevamente</span>
-        </div>
-      }
       <form class="flex flex-col gap-6 rounded-l-xl bg-gray-200 p-8" [formGroup]="form">
         <div class="flex flex-col items-center gap-2">
           <h1 class="text-center text-2xl font-bold text-gray-900">Bienvenido de vuelta</h1>
           <p class="text-sm text-gray-600">Inicia sesion con tu cuenta de Talk Space</p>
+          @if (failLogin) {
+            <div class="rounded-lg border-1 border-red-500 p-2">
+              <span class="text-sm text-red-400">Usuario o contraseña incorrectos. ¡Intente nuevamente!</span>
+            </div>
+          }
         </div>
         <div>
           <label class="block text-sm font-medium" for="email">Correo electronico</label>
@@ -24,7 +24,7 @@
               placeholder="ejemplo@dominio.com"
             />
           </div>
-          <div class="flex h-2 flex-col px-2">
+          <div class="flex h-1 flex-col px-2">
             @if (emailField.touched) {
               <!--  -->
               @if (emailField.hasError('email')) {
@@ -51,7 +51,7 @@
               formControlName="password"
             />
           </div>
-          <div class="flex h-2 flex-col px-2">
+          <div class="flex h-1 flex-col px-2">
             @if (passwordField.touched) {
               <!--  -->
               @if (passwordField.hasError('required')) {
@@ -74,7 +74,10 @@
           </button>
         </div>
         <div class="text-center">
-          <a [routerLink]="['/auth/register']" class="cursor-pointer text-sm">¿No tienes una cuenta? Registrate.</a>
+          <span class="cursor-default text-sm"
+            >¿No tienes una cuenta?
+            <a class="cursor-pointer underline decoration-1" [routerLink]="['/auth/register']">Registrate.</a></span
+          >
         </div>
       </form>
     </div>
@@ -82,11 +85,5 @@
       <span class="cursor-default text-4xl font-semibold tracking-widest text-white">TALK SPACE</span>
     </div>
   </div>
-  <footer class="cursor-default p-2 text-center">
-    <p class="text-sm text-gray-900">© 2025 Talk Space. Creado por FrancoJS.</p>
-  </footer>
+  <app-home-footer></app-home-footer>
 </div>
-
-<div
-  class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"
-></div>

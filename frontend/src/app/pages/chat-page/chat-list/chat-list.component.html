@@ -1,63 +1,66 @@
-<section class="h-full max-h-full overflow-y-auto">
-  <div class="sticky top-0 z-999 bg-cyan-900">
-    <div class="mx-2 mb-2 flex items-center justify-between p-2">
-      <h3 class="text-2xl font-bold">Chats</h3>
+<section>
+  <div class="sticky top-0 z-999 bg-gray-100">
+    <div class="flex items-center justify-between p-4">
+      <h3 class="text-xl font-bold">Chats</h3>
       <button
-        class="cursor-pointer rounded-full outline-0 transition-all duration-75 ease-in-out hover:bg-cyan-700"
+        class="cursor-pointer rounded-full outline-0 transition-all duration-75 ease-in-out hover:bg-gray-300"
         (click)="openSearchDialog()"
       >
         <img class="p-3" src="/assets/icons/add-icon.svg" alt="add-icon" />
       </button>
     </div>
   </div>
-
-  @for (privateChat of privateChats; let i = $index; track privateChat._id) {
-    <div
-      class="group mx-2 cursor-pointer rounded-sm px-2 py-3 transition-all duration-100 ease-in-out hover:bg-cyan-600"
-      [ngClass]="{ 'bg-cyan-600': activeChatId === privateChat._id }"
-      (click)="activeChatId !== privateChat._id ? openChat(privateChat._id, privateChat.receiverUser, i) : null"
-    >
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div
-            class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-1 border-white"
-            [ngClass]="{ 'border-1 border-white': !privateChat.receiverUser.profilePictureUrl }"
-          >
-            <img
-              class="object-cover"
-              src="{{ privateChat.receiverUser.profilePictureUrl || 'assets/icons/user-icon.svg' }}"
-              alt=""
-              [ngClass]="{ 'h-4 w-4': !privateChat.receiverUser.profilePictureUrl }"
-            />
-          </div>
-          <p class="text-md font-medium">{{ privateChat.receiverUser.username }}</p>
-        </div>
-        <div class="flex items-center justify-center gap-3 text-xs">
-          {{ privateChat.lastMessageAt | date: 'HH:mm' }}
-          @if (privateChat.unreadMessagesCount > 0 && activeChatId !== privateChat._id) {
-            <div class="flex h-6 w-6 items-center justify-center rounded-full bg-red-400 text-center text-white">
-              <span>
-                {{ privateChat.unreadMessagesCount }}
-              </span>
+  <div class="h-full overflow-y-auto bg-gray-100">
+    @for (privateChat of privateChats; let i = $index; track privateChat._id) {
+      <div
+        class="group mx-2 cursor-pointer rounded-sm px-2 py-3 transition-all duration-100 ease-in-out hover:bg-gray-200"
+        [ngClass]="{ 'bg-gray-300 hover:bg-gray-300': activeChatId === privateChat._id }"
+        (click)="activeChatId !== privateChat._id ? openChat(privateChat._id, privateChat.receiverUser, i) : null"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div
+              class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-400"
+              [ngClass]="{ 'border-1 border-gray-300': !privateChat.receiverUser.profilePictureUrl }"
+            >
+              <img
+                class="object-cover"
+                src="{{ privateChat.receiverUser.profilePictureUrl || 'assets/icons/user-icon.svg' }}"
+                alt=""
+                [ngClass]="{ 'h-4 w-4': !privateChat.receiverUser.profilePictureUrl }"
+              />
             </div>
-          }
-          <div class="opacity-0 transition-all duration-100 ease-in-out group-hover:opacity-100">
-            <img src="/assets/icons/arrow-down-icon.svg" alt="" />
+            <p class="">{{ privateChat.receiverUser.username }}</p>
+          </div>
+          <div class="flex items-center justify-center gap-3 text-xs">
+            {{ privateChat.lastMessageAt | date: 'HH:mm' }}
+            @if (privateChat.unreadMessagesCount > 0 && activeChatId !== privateChat._id) {
+              <div class="flex h-6 w-6 items-center justify-center rounded-full bg-red-400 text-center text-white">
+                <span>
+                  {{ privateChat.unreadMessagesCount }}
+                </span>
+              </div>
+            }
+            <div class="opacity-0 transition-all duration-100 ease-in-out group-hover:opacity-100">
+              <img src="/assets/icons/arrow-down-icon.svg" alt="" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  } @empty {
-    <div class="flex h-60 items-center p-8 text-center text-white">
-      <div
+    }
+
+    <!-- @empty {
+      <div class="flex h-60 items-center p-8 text-center text-white">
+        <div
         class="empty flex cursor-pointer flex-col items-center gap-2 rounded-md p-10 hover:bg-cyan-800"
         (click)="openSearchDialog()"
-      >
+        >
         <span class="">No se encontraron chats, agrega a alguien y empieza a chatear</span>
         <img src="/assets/icons/add-icon.svg" alt="add-icon" />
       </div>
     </div>
-  }
+    } -->
+  </div>
 </section>
 
 @if (isModalOpen) {

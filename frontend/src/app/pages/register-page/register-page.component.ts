@@ -6,11 +6,12 @@ import { PasswordValidator } from '../../shared/validators/password-validator';
 import { EmailValidator } from '../../shared/validators/email-validator';
 import { IRegisterRequest } from '../../services/api/models/auth-interfaces';
 import { HomeNavBarComponent } from '../../shared/components/home-nav-bar/home-nav-bar.component';
+import { HomeFooterComponent } from '../../shared/components/home-footer/home-footer.component';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, HomeNavBarComponent],
+  imports: [RouterLink, ReactiveFormsModule, HomeNavBarComponent, HomeFooterComponent],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
 })
@@ -18,18 +19,18 @@ export class RegisterPageComponent {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authApiService = inject(AuthApiService);
   private readonly _router = inject(Router);
-  failRegister: boolean = false;
+  isRegisterFailed: boolean = false;
 
   form = this._formBuilder.group(
     {
       username: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       email: ['', [Validators.required, EmailValidator.emailValidator, Validators.maxLength(100)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
+      // confirmPassword: ['', Validators.required],
     },
-    {
-      validators: [PasswordValidator.crossPasswordValidator],
-    },
+    // {
+    //   validators: [PasswordValidator.crossPasswordValidator],
+    // },
   );
 
   registerUser() {
@@ -38,8 +39,8 @@ export class RegisterPageComponent {
       return;
     }
 
-    const { confirmPassword, ...user } = this.form.value;
-    this._authApiService.registerUser(user as IRegisterRequest).subscribe({
+    // const { confirmPassword, ...user } = this.form.value;
+    this._authApiService.registerUser(this.form.value as IRegisterRequest).subscribe({
       next: (response) => {
         const { accessToken, user } = response;
         console.log(user);
@@ -47,8 +48,8 @@ export class RegisterPageComponent {
         this._authApiService.setUser(user);
         this._router.navigate(['/chat']);
       },
-      error: (error) => {
-        this.failRegister = true;
+      error: () => {
+        this.isRegisterFailed = true;
       },
     });
   }
@@ -62,7 +63,7 @@ export class RegisterPageComponent {
   get passwordField(): FormControl {
     return this.form.controls.password;
   }
-  get confirmPasswordField(): FormControl {
-    return this.form.controls.confirmPassword;
-  }
+  // get confirmPasswordField(): FormControl {
+  //   return this.form.controls.confirmPassword;
+  // }
 }

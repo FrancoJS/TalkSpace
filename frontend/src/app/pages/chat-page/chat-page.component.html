@@ -1,7 +1,9 @@
-<div class="h-screen grid grid-cols-(--grid-chat-page)">
+<div class="grid h-dvh grid-cols-(--grid-chat-page) px-30 py-5">
   <app-nav-bar></app-nav-bar>
-  <app-dynamic-panel></app-dynamic-panel>
-  <div>
+  <div class="h-full overflow-y-auto">
+    <app-dynamic-panel></app-dynamic-panel>
+  </div>
+  <div class="h-full overflow-auto">
     <app-chat></app-chat>
   </div>
 </div>

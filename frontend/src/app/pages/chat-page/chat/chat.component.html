@@ -1,10 +1,10 @@
-<div class="grid h-screen grid-rows-(--grid-chat)">
-  <section class="flex items-center border-b-1 border-cyan-900 bg-cyan-800 p-4 shadow-xl">
+<div class="grid h-full grid-rows-(--grid-chat)">
+  <section class="flex items-center bg-gray-200 p-4 shadow-sm">
     @if (receiverUser.username && receiverUser.email) {
-      <div class="flex items-center gap-3 text-xl text-white">
+      <div class="flex items-center gap-4 text-lg">
         <div
           class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full"
-          [ngClass]="{ 'border-1 border-white': !receiverUser.profilePictureUrl }"
+          [ngClass]="{ 'bg-gray-400': !receiverUser.profilePictureUrl }"
         >
           <img class="object-cover" src="{{ receiverUser.profilePictureUrl || 'assets/icons/user-icon.svg' }}" alt="" />
         </div>
@@ -12,46 +12,52 @@
       </div>
     }
   </section>
-  <section #scrollContainer class="flex flex-col gap-2 overflow-y-scroll bg-cyan-800 p-6">
+  <section #scrollContainer class="pattern flex flex-col gap-2 overflow-y-scroll bg-gray-300 px-10 py-6">
     @for (msg of messages; track msg._id; let i = $index) {
       <!--  -->
       @if (receiverUser._id === msg.senderId) {
         <div class="flex flex-col items-start justify-start">
-          <div class="max-w-(--messages-width) rounded-tl-lg rounded-r-lg bg-cyan-900 px-4 py-2 break-words text-white">
+          <div
+            class="max-w-(--messages-width) rounded-tl-lg rounded-r-lg bg-gray-200 px-2 py-1 break-words text-gray-800 shadow-xs"
+          >
             <p>
               {{ msg.message }}
             </p>
+            <div class="ml-8 flex justify-end">
+              <p class="text-xs font-light text-gray-500">{{ msg.createdAt | date: '  HH:mm a' }}</p>
+            </div>
           </div>
-          <p class="text-xs text-gray-300">{{ msg.createdAt | date: 'MMM dd HH:mm' }}</p>
         </div>
       }
       @if (user._id === msg.senderId) {
         <div class="flex flex-col items-end justify-end">
           <div
-            class="max-w-(--messages-width) rounded-l-lg rounded-tr-lg border-1 border-cyan-700 bg-cyan-600 px-4 py-2 break-words text-white"
+            class="max-w-(--messages-width) rounded-l-lg rounded-tr-lg bg-cyan-900 px-2 py-1 break-words text-white shadow-xs"
           >
             <p>
               {{ msg.message }}
             </p>
+            <div class="ml-8 flex justify-end">
+              <p class="text-xs font-light text-gray-300">{{ msg.createdAt | date: ' HH:mm a' }}</p>
+            </div>
           </div>
-          <p class="text-xs text-gray-300">{{ msg.createdAt | date: 'MMM dd HH:mm' }}</p>
         </div>
       }
     }
   </section>
 
-  <section class="chat-input flex items-center bg-cyan-950 p-4">
+  <section class="chat-input flex items-center gap-3 bg-gray-200 px-4 py-3">
     @if (receiverUser.username) {
-      <div class="flex w-full items-center rounded-lg bg-cyan-700 px-4 py-3">
+      <div class="flex w-full items-center rounded-lg bg-gray-100 px-4 py-3 shadow-sm">
         <input
           [(ngModel)]="chatInput"
-          class="block w-full grow bg-cyan-700 text-base text-white placeholder:text-gray-300 focus:outline-none"
+          class="block w-full grow bg-gray-100 text-base text-gray-800 placeholder:text-gray-500 focus:outline-none"
           type="text"
-          placeholder="Escribe un mensaje a {{ receiverUser.username }} ..."
+          placeholder="Escribe un mensaje a {{ receiverUser.username }}"
           (keydown.enter)="sendMessage()"
         />
-        <img (click)="sendMessage()" class="cursor-pointer" src="assets/icons/send-message-icon.svg" alt="" />
       </div>
+      <img (click)="sendMessage()" class="cursor-pointer" src="assets/icons/send-message-icon.svg" alt="" />
     }
   </section>
 </div>

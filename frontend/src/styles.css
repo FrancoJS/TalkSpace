@@ -5,8 +5,8 @@
 }
 
 :root {
-  --grid-chat: 70px 1fr 100px;
-  --grid-chat-page: 100px 350px 1fr;
+  --grid-chat: auto 1fr auto;
+  --grid-chat-page: 100px 400px 1fr;
   --messages-width: 60%;
 }
 
