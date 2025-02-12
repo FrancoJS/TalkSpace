@@ -4,10 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
 import { IUser } from '../../../services/api/models/user-interfaces';
 import { ModalService } from '../../../services/modal.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-search-dialog',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './search-dialog.component.html',
   styleUrl: './search-dialog.component.css',
 })
@@ -26,7 +27,7 @@ export class SearchDialogComponent implements OnInit {
   hasResult: boolean = true;
 
   formGroup = this._formBuilder.group({
-    email: ['franco2@gmail.com', [Validators.required, Validators.maxLength(100), Validators.email]],
+    email: ['franco@gmail.com', [Validators.required, Validators.maxLength(100), Validators.email]],
   });
 
   ngOnInit(): void {

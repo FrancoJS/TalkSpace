@@ -1,6 +1,12 @@
-<div class="grid h-full grid-rows-(--grid-chat)">
-  <section class="flex items-center bg-gray-200 p-4 shadow-sm">
-    @if (receiverUser.username && receiverUser.email) {
+<div
+  class="grid h-full grid-rows-(--grid-chat)"
+  [ngClass]="{
+    'grid-rows-[1fr]': !receiverUser.username || !receiverUser.email,
+    'grid-rows-(--grid-chat)': receiverUser.username || receiverUser.email,
+  }"
+>
+  @if (receiverUser.username && receiverUser.email) {
+    <section class="flex items-center bg-gray-200 p-4 shadow-sm">
       <div class="flex items-center gap-4 text-lg">
         <div
           class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full"
@@ -10,8 +16,8 @@
         </div>
         <span>{{ receiverUser.username }}</span>
       </div>
-    }
-  </section>
+    </section>
+  }
   <section #scrollContainer class="pattern flex flex-col gap-2 overflow-y-scroll bg-gray-300 px-10 py-6">
     @for (msg of messages; track msg._id; let i = $index) {
       <!--  -->
@@ -43,11 +49,16 @@
           </div>
         </div>
       }
+    } @empty {
+      <div class="flex h-full flex-col items-center justify-center">
+        <img class="w-40" src="assets/icons/comment-dots-icon.svg" alt="" />
+        <span class="text-gray-600">¡Abre una conversacion o empieza una nueva!</span>
+      </div>
     }
   </section>
 
-  <section class="chat-input flex items-center gap-3 bg-gray-200 px-4 py-3">
-    @if (receiverUser.username) {
+  @if (receiverUser.username && receiverUser.email) {
+    <section class="chat-input flex items-center gap-3 bg-gray-200 px-4 py-3">
       <div class="flex w-full items-center rounded-lg bg-gray-100 px-4 py-3 shadow-sm">
         <input
           [(ngModel)]="chatInput"
@@ -58,6 +69,6 @@
         />
       </div>
       <img (click)="sendMessage()" class="cursor-pointer" src="assets/icons/send-message-icon.svg" alt="" />
-    }
-  </section>
+    </section>
+  }
 </div>

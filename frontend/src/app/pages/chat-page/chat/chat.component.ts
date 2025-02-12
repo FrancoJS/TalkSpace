@@ -31,8 +31,10 @@ export class ChatComponent implements OnInit {
     this._socketService.connect(this.user._id);
 
     this._userSharingService.user$.subscribe({
-      next: (user) => (this.receiverUser = user),
-      error: () => (this.receiverUser = { _id: '', username: '', email: '', profilePictureUrl: '' }),
+      next: (user) => {
+        this.receiverUser = user;
+        console.log(this.receiverUser);
+      },
     });
 
     // Servicio para compartir los mensajes desde el chatList que busca por el id del chat

@@ -20,9 +20,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888; /* Color de la barra */
+  background: #aaa; /* Color de la barra */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color al pasar el mouse */
+  background: #888; /* Color al pasar el mouse */
 }

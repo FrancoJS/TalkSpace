@@ -40,6 +40,7 @@ export class UserProfileComponent implements OnInit {
 
   resetInput() {
     this.isFocused = false;
+    this.inputUsername = this.user.username;
   }
 
   deleteImage() {
