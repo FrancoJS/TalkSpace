@@ -3,6 +3,7 @@ import { IUser } from './user-interfaces';
 export interface IPrivateChat {
   _id: string;
   lastMessageAt: string;
+  lastMessage: string;
   unreadMessagesCount: number;
   receiverUser: IUser;
 }

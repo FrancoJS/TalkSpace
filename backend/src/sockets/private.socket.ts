@@ -47,7 +47,7 @@ export const privateChatHandler = (io: Server, socket: Socket) => {
 				newMessage,
 			});
 
-			await PrivateChatService.updateLastMessageDate(privateChatId);
+			await PrivateChatService.updateLastMessage(privateChatId, data.message);
 
 			io.to(privateChatId).emit('privateMessage', {
 				newMessage,

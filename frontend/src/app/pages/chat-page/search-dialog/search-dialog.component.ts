@@ -4,11 +4,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
 import { IUser } from '../../../services/api/models/user-interfaces';
 import { ModalService } from '../../../services/modal.service';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-search-dialog',
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule],
   templateUrl: './search-dialog.component.html',
   styleUrl: './search-dialog.component.css',
 })

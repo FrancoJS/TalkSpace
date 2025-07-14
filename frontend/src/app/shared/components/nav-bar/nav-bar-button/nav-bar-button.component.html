@@ -1,9 +1,9 @@
 <li>
   <button
-    class="tooltip-btn mb-4 flex cursor-pointer items-center justify-center transition-all duration-75 ease-in hover:rounded-3xl hover:bg-cyan-600"
+    class="tooltip-btn mb-4 flex cursor-pointer items-center justify-center p-5 transition-all duration-75 ease-in hover:rounded-3xl hover:bg-cyan-600"
     [attr.aria-label]="ariaLabel"
-    [ngClass]="{ 'rounded-3xl bg-cyan-600': isActive, 'rounded-4xl bg-cyan-900': !isActive }"
+    [ngClass]="{ 'rounded-3xl bg-cyan-600': isActive, 'rounded-full bg-cyan-900': !isActive }"
   >
-    <img class="p-5" src="{{ iconSrc }}" [attr.alt]="imgAlt" />
+    <img class="max-2xl:h-4 max-2xl:w-4" src="{{ iconSrc }}" [attr.alt]="imgAlt" />
   </button>
 </li>

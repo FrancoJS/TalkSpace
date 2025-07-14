@@ -74,6 +74,7 @@ export class ChatListComponent implements OnInit {
       }
 
       this.privateChats[chatIndex].lastMessageAt = newMessage.createdAt;
+      this.privateChats[chatIndex].lastMessage = newMessage.message;
 
       if (newMessage.privateChatId !== this.activeChatId && newMessage.senderId !== this.user._id) {
         this.privateChats[chatIndex].unreadMessagesCount++;

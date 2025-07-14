@@ -14,7 +14,6 @@ const PrivateChatSchema = new Schema<IPrivateChat>({
 	},
 	lastMessage: {
 		type: String,
-		// required: true,
 	},
 	lastMessageAt: {
 		type: Date,

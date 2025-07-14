@@ -91,8 +91,8 @@ class PrivateChatService {
 		return chats;
 	}
 
-	static async updateLastMessageDate(chatId: string) {
-		return PrivateChat.findByIdAndUpdate(chatId, { lastMessageAt: Date.now() }, { new: true });
+	static async updateLastMessage(chatId: string, lastMessage: string) {
+		return PrivateChat.findByIdAndUpdate(chatId, { lastMessage, lastMessageAt: Date.now() }, { new: true });
 	}
 }
 

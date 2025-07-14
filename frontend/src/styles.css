@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 * {
-  font-family: 'Inter', sans;
+  font-family: 'Inter', sans-serif;
 }
 
 :root {
